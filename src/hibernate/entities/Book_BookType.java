@@ -14,15 +14,15 @@ import javax.persistence.Table;
 public class Book_BookType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int id;
+	private int id;
 
 	@ManyToOne(cascade = {CascadeType.DETACH})
 	@JoinColumn(name = "bookId")
-	Book book;
+	private Book book;
 
 	@ManyToOne(cascade = {CascadeType.DETACH})
 	@JoinColumn(name = "bookTypeId")
-	BookType bookType;
+	private BookType bookType;
 
 	public Book_BookType() {
 		super();

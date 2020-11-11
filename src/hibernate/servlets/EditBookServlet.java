@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hibernate.validation.BookValidation;
+import org.apache.log4j.Logger;
+
+import hibernate.validation.BookValidator;
+import hibernate.constants.HibernateCommandNames;
 import hibernate.dao.AuthorDao;
 import hibernate.dao.BookDao;
 import hibernate.dao.BookTypeDao;
@@ -19,9 +23,6 @@ import hibernate.entities.Author;
 import hibernate.entities.Book;
 import hibernate.entities.BookType;
 
-/**
- * Servlet implementation class EditBookServlet
- */
 @WebServlet("/editBook")
 public class EditBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,9 +31,6 @@ public class EditBookServlet extends HttpServlet {
 	private BookTypeDao bookTypeDao;
 	private Book_BookTypeDao book_bookTypeDao;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public EditBookServlet() {
 		super();
 	}
@@ -45,82 +43,59 @@ public class EditBookServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		_getFile(request, response);
+		int bookId = Integer.parseInt(request.getParameter("bookId"));
+
+		Book bookEdit = null;
+		try {
+			bookEdit = bookDao.getBookById(bookId);
+
+			request.setAttribute("bookEdit", bookEdit);
+			_getFile(request, response);
+		} catch (Exception e) {
+			logger.error("Sorry, something wrong!", e);
+			response.sendRedirect(request.getContextPath() + HibernateCommandNames.URL_ERROR);
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
 		String bookName = request.getParameter("bookName");
 		int authorId = Integer.parseInt(request.getParameter("author.authorId"));
-
 		String[] listbookType = request.getParameterValues("bookTypeSelected");
+		List<String> errors = BookValidator.validate(bookId, bookName, bookDao.getBooks());
 
-		if (!BookValidation._checkEmpty(bookName)) {
-			request.setAttribute("error", "The book's name is not null.");
+		if (errors.size() > 0) {
+			request.setAttribute("errors", errors);
 			_getFile(request, response);
-
-		} else if (!BookValidation._checkExisted(bookId, bookName, bookDao.getAllBook())) {
-			request.setAttribute("error", "The book's name is existed.");
-			_getFile(request, response);
-
 		} else {
 			Book book = new Book(bookId, bookName, authorDao.getAuthorById(authorId));
-			bookDao.updateBook(book);
 
-			List<Integer> listBookTypeChecked = book_bookTypeDao.getListBookTypeIdByBookId(bookId);
-			if (listbookType != null) {
-				// check bookType existed in db
-				for (String bookTypeId : listbookType) {
-					if (BookValidation._checkBookTypeExisted(book_bookTypeDao.getAllBook_BookType(), bookId,
-							Integer.parseInt(bookTypeId))) {
-						book_bookTypeDao.saveItem(book, bookTypeDao.getBookTypeById(Integer.parseInt(bookTypeId)));
-					}
-				}
-				// check bookType is removed
-				for (int i = 0; i < listbookType.length; i++) {
-					for (int bookTypeId : listBookTypeChecked) {
-						if (bookTypeId == Integer.parseInt(listbookType[i])) {
-							book_bookTypeDao.deleteBook_BookTypeByBookTypeId(bookTypeId);
-						}
-					}
-				}
-			} // check list bookType remove all
-			else {
-				book_bookTypeDao.deleteBook_BookTypeDaoByBookId(bookId);
-			}
+			bookDao.updateBook(book);
+			book_bookTypeDao.updateBook_BookType(book, listbookType, bookTypeDao);
+
 			response.sendRedirect("books");
 		}
 	}
 
-	public void _getFile(HttpServletRequest request, HttpServletResponse response)
+	private void _getFile(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
 
-		Book bookEdit = bookDao.getBookById(bookId);
-		List<Author> listAuthor = authorDao.getAllAuthor();
+		List<Author> listAuthor = authorDao.getAuthors();
 		List<BookType> listBookType = bookTypeDao.getAllBookType();
 		List<Integer> listBookTypeIdSelected = book_bookTypeDao.getListBookTypeIdByBookId(bookId);
 
-		request.setAttribute("bookEdit", bookEdit);
 		request.setAttribute("listAuthor", listAuthor);
 		request.setAttribute("listBookType", listBookType);
 		request.setAttribute("listBookTypeSelected", listBookTypeIdSelected);
 
-		RequestDispatcher dispatcher = this.getServletContext()
-				.getRequestDispatcher("/WEB-INF/view/addAndEditBook/index.jsp");
+		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(HibernateCommandNames.VIEW_FORM);
 		dispatcher.forward(request, response);
 	}
+
+	final static Logger logger = Logger.getLogger(EditBookServlet.class);
+
 }

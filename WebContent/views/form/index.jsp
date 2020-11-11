@@ -4,7 +4,7 @@
 <html>
 <head>
 	<title>The book</title>
-	<link rel="icon" href="https://img.icons8.com/cute-clipart/344/book.png" type="image/gif" sizes="16x16">
+	<link rel="icon" href="./static/image/book.png" type="image/gif" sizes="16x16">
 	<link href="./static/css/main.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700,900|Google+Sans+Display:400,500" rel="stylesheet" nonce="fSXOtZ5Ye0RE8N7b_mEygA">
 </head>
@@ -15,7 +15,7 @@
 			<input type="hidden" name="bookId" class="input-item" value="${bookEdit == null ? 0 : bookEdit.getBookId()}">
 			<div class="form-group">
 				<label class="text-label" for="book-name">Book name</label>
-				<input type="text" name="bookName" value="${bookEdit == null ? "" : bookEdit.getBookName()}" class="input-item ${error == null ? "" : "error"}" placeholder="${error == null ? " Enter the book's name " : error}">
+				<input type="text" name="bookName" value="${bookEdit == null ? "" : bookEdit.getBookName()}" class="input-item ${errors == null ? "" : "error"}" placeholder="${error == null ? " Enter the book's name " : errors}">
 			</div>
 			<div class="form-group">
 				<label class="text-label" for="author">Author</label> 
@@ -49,14 +49,14 @@
 			</div>
 		</form>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="./static/jquery/jquery-3.4.1.js"></script>
 	<script>
-	$(document).ready(function(){
-		$(".book-type-dropdown").click(function(e){
-			e.preventDefault();
-			$(".book-type-list").toggle();
+		$(document).ready(function(){
+			$(".book-type-dropdown").click(function(e){
+				e.preventDefault();
+				$(".book-type-list").toggle();
+			});
 		});
-	});
 	</script>
 </body>
 </html>
