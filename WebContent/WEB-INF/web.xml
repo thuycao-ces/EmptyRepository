@@ -6,11 +6,11 @@
 	<display-name>BookManagementServlet</display-name>
 
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/view/listBooks/index.jsp</welcome-file>
+		<welcome-file>/views/listBook/index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
-		<servlet-name>listBooks</servlet-name>
+		<servlet-name>listBook</servlet-name>
 		<servlet-class>servletTutorial.servlets.ListBooksServlet</servlet-class>
 	</servlet>
 
@@ -28,9 +28,14 @@
 		<servlet-name>deleteBook</servlet-name>
 		<servlet-class>servletTutorial.servlets.DeleteBookServlet</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>errorHandler</servlet-name>
+		<servlet-class>servletTutorial.servlets.errorHandler</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>listBooks</servlet-name>
+		<servlet-name>listBook</servlet-name>
 		<url-pattern>/books</url-pattern>
 	</servlet-mapping>
 
@@ -47,5 +52,10 @@
 	<servlet-mapping>
 		<servlet-name>deleteBook</servlet-name>
 		<url-pattern>/deleteBook</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>errorHandler</servlet-name>
+		<url-pattern>/error</url-pattern>
 	</servlet-mapping>
 </web-app>

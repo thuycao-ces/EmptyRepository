@@ -6,9 +6,9 @@
 <html>
 <head>
 	<title>The book</title>
-	<link rel="icon" href="https://img.icons8.com/cute-clipart/344/book.png" type="image/gif" sizes="16x16">
+	<link rel="icon" href="./static/image/book.png" type="image/gif" sizes="16x16">
 	<link href="./static/css/main.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./static/bootstrap/bootstrap-4.5.3-dist/css/bootstrap.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700,900|Google+Sans+Display:400,500" rel="stylesheet" nonce="fSXOtZ5Ye0RE8N7b_mEygA">
 </head>
 <body>
@@ -29,12 +29,12 @@
 			<tbody class="list-books">
 				<%
 					int i = 1;
-					List<Book> listBooks = (List) request.getAttribute("data");
-					if(listBooks != null) {
-						for (Book book : listBooks) {
+					List<Book> listBook = (List) request.getAttribute("listBook");
+					if(listBook != null) {
+						for (Book book : listBook) {
 				%>
 							<tr class="book-item">
-								<td class="book-item-description"><%=book.getBookId()%></td>
+								<td class="book-item-description"><%=i++%></td>
 								<td class="book-item-description"><%=book.getBookName()%></td>
 								<td class="book-item-description"><%=book.getAuthor()%></td>
 								<td class="book-item-description">
@@ -54,7 +54,7 @@
 		        <!-- Modal Header -->
 		        <div class="header-modal">
 		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<img class="icon-confirm" alt="confirm-icon" src="https://img.freepik.com/free-vector/cute-happy-smiling-intestine-apple-character-flat-cartoon-illustration-icon-design-isolated-white-background-intestine-apple-fruit-character-concept_92289-1502.jpg?size=626&ext=jpg">
+					<img class="icon-confirm" alt="confirm-icon" src="./static/image/background-delete-modal.jpg">
 		        	<h5 id="content-confirm-title" class="text-title"></h5>
 		        </div>
 		        <!-- Modal body -->
@@ -68,10 +68,10 @@
 		    </div>
 		  </div>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<script src="./static/jquery/jquery.min.js"></script>
+	<script src="./static/jquery/popper.min.js"></script>
+	<script src="./static/bootstrap/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+	<script src="./static/font-icon/a076d05399.js"></script>
 	<script type="text/javascript">
 		function confirmation(href, action) {
 			$('#button-confirm').attr("href", href);
