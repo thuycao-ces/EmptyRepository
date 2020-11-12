@@ -28,4 +28,5 @@ public class JpaConfig {
 
 		return transactionManager;
 	}
+
 }

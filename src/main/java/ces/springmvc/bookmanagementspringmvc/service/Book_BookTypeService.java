@@ -2,22 +2,17 @@ package ces.springmvc.bookmanagementspringmvc.service;
 
 import java.util.List;
 
-import ces.springmvc.bookmanagementspringmvc.entity.BookEntity;
-import ces.springmvc.bookmanagementspringmvc.entity.BookTypeEntity;
-import ces.springmvc.bookmanagementspringmvc.entity.Book_BookTypeEntity;
+import ces.springmvc.bookmanagementspringmvc.dto.BookDTO;
+import ces.springmvc.bookmanagementspringmvc.dto.Book_BookTypeDTO;
 
 public interface Book_BookTypeService {
 
-	void saveBook_BookType(BookEntity book, BookTypeEntity bookType);
+	void deleteBook_BookTypeByBookId(Long bookId);
 
-	void deleteBook_BookTypeById(Long bookId);
-
-	void deleteBook_BookTypeByBookTypeId(Long bookTypeId);
-
-	void deleteBook_BookTypeDaoByBookId(Long bookId);
+	void updateBook_BookType(BookDTO book, List<Long> listbookTypeId);
 
 	List<Long> getListBookTypeIdByBookId(Long bookId);
 
-	List<Book_BookTypeEntity> getAllBook_BookType();
+	List<Book_BookTypeDTO> getBook_BookTypes();
 
 }

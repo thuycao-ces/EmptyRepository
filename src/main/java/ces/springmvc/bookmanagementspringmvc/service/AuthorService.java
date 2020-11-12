@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ces.springmvc.bookmanagementspringmvc.entity.AuthorEntity;
+import ces.springmvc.bookmanagementspringmvc.dto.AuthorDTO;
 
 @Service
 public interface AuthorService {
 
-	AuthorEntity getAuthorById(Long authorId);
+	AuthorDTO getAuthorById(Long authorId);
 
-	List<AuthorEntity> getAllAuthors();
+	List<AuthorDTO> getAuthors();
 
 }

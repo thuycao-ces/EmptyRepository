@@ -3,9 +3,8 @@
 <html>
 <head>
 	<title>The book</title>
-	<link rel="icon" href="https://img.icons8.com/cute-clipart/344/book.png" type="image/gif" sizes="16x16">
+	<link rel="icon" href="./static/image/book.png" type="image/gif" sizes="16x16">
 	<link href="./static/css/main.css" rel="stylesheet" type="text/css">
-	<link href="../static/css/main.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700,900|Google+Sans+Display:400,500" rel="stylesheet" nonce="fSXOtZ5Ye0RE8N7b_mEygA">
 </head>
 <body>
@@ -15,7 +14,7 @@
 			<input type="hidden" name="bookId" class="input-item" value="${bookEdit == null ? 0 : bookEdit.getBookId()}">
 			<div class="form-group">
 				<label class="text-label" for="book-name">Book name</label> 
-				<input type="text" name="bookName" value="${bookEdit == null ? "" : bookEdit.getBookName()}" class="input-item ${error == null ? "" : "error"}" placeholder="${error == null ? " Enter the book's name " : error}">
+				<input type="text" name="bookName" value="${bookEdit == null ? "" : bookEdit.getBookName()}" class="input-item ${errors == null ? "" : "error"}" placeholder="${errors == null ? " Enter the book's name " : errors}">
 			</div>
 			<div class="form-group">
 				<label class="text-label" for="author">Author</label> 
@@ -33,10 +32,10 @@
 					<p class="caret"></p>
 				</button>
 				<ul class="book-type-list d-none">
-					<c:forEach var="author" items="${listBookType}">
+					<c:forEach var="bookType" items="${listBookType}">
 						<li class="multiselect-item multiselect-all book-type-list-item">
-							<input type="checkbox" value="${author.getBookTypeId()}" name="bookTypeSelected" ${listBookTypeSelected.contains(author.getBookTypeId()) ? 'checked' : ''}/>
-							<strong>${author.getBookTypeName()}</strong>
+							<input type="checkbox" value="${bookType.getBookTypeId()}" name="bookTypeSelected" ${listBookTypeSelected.contains(bookType.getBookTypeId()) ? 'checked' : ''}/>
+							<strong>${bookType.getBookTypeName()}</strong>
 						</li>
 					</c:forEach>
 				</ul>
@@ -49,7 +48,7 @@
 			</div>
 		</form>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="./static/jquery/jquery-3.4.1.js"></script>
 	<script>
 	$(document).ready(function(){
 		$(".book-type-dropdown").click(function(e){

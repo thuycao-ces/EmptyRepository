@@ -2,18 +2,18 @@ package ces.springmvc.bookmanagementspringmvc.service;
 
 import java.util.List;
 
-import ces.springmvc.bookmanagementspringmvc.entity.BookEntity;
+import ces.springmvc.bookmanagementspringmvc.dto.BookDTO;
 
 public interface BookService {
 
 	void deleteBook(Long bookId);
 
-	void updateBook(BookEntity book);
+	void updateBook(BookDTO book);
 
-	void saveBook(BookEntity book);
+	void saveBook(BookDTO book);
 
-	BookEntity getBookByBookId(Long bookId);
+	BookDTO getBookByBookId(Long bookId) throws Exception;
 
-	List<BookEntity> getAllBooks();
+	List<BookDTO> getBooks();
 
 }

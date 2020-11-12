@@ -2,6 +2,8 @@ package ces.springmvc.bookmanagementspringmvc.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,11 @@ import ces.springmvc.bookmanagementspringmvc.service.AuthorService;
 import ces.springmvc.bookmanagementspringmvc.service.BookService;
 import ces.springmvc.bookmanagementspringmvc.service.BookTypeService;
 import ces.springmvc.bookmanagementspringmvc.service.Book_BookTypeService;
-import ces.springmvc.bookmanagementspringmvc.validation.BookValidation;
-import ces.springmvc.bookmanagementspringmvc.entity.AuthorEntity;
-import ces.springmvc.bookmanagementspringmvc.entity.BookEntity;
-import ces.springmvc.bookmanagementspringmvc.entity.BookTypeEntity;
+import ces.springmvc.bookmanagementspringmvc.validation.BookValidator;
+import ces.springmvc.bookmanagementspringmvc.constant.MVCCommandNames;
+import ces.springmvc.bookmanagementspringmvc.dto.AuthorDTO;
+import ces.springmvc.bookmanagementspringmvc.dto.BookDTO;
+import ces.springmvc.bookmanagementspringmvc.dto.BookTypeDTO;
 
 @Controller
 public class BookController {
@@ -39,36 +42,43 @@ public class BookController {
 
 		return "index";
 	}
-	
+
 	@GetMapping("/books")
 	public String listBooks(Model model) {
-		List<BookEntity> listBook = bookService.getAllBooks();
+		List<BookDTO> listBook = bookService.getBooks();
 		model.addAttribute("listBook", listBook);
 
-		return "listBook/index";
+		return MVCCommandNames.VIEW_BOOKS;
 	}
 
 	@GetMapping("/addBook")
 	public String showAddForm(Model model) {
+		model.addAttribute("url", MVCCommandNames.URL_SAVE_ADD);
 
-		model.addAttribute("url", "/saveAddBook");
 		_getFile(model);
-
-		return "addAndEditBook/index";
+		return MVCCommandNames.VIEW_FORM;
 	}
 
-	@GetMapping("/editBook/bookId={bookId}")
+	@GetMapping("/editBook-id={bookId}")
 	public String showEditForm(Model model, @PathVariable(name = "bookId") Long bookId) {
+		try {
+			model.addAttribute("url", MVCCommandNames.URL_SAVE_EDIT);
+			model.addAttribute("bookEdit", bookService.getBookByBookId(bookId));
+			model.addAttribute("listBookTypeSelected", book_bookTypeService.getListBookTypeIdByBookId(bookId));
 
-		model.addAttribute("url", "/saveEditBook");
-		model.addAttribute("bookEdit", bookService.getBookByBookId(bookId));
-		model.addAttribute("listBookTypeSelected", book_bookTypeService.getListBookTypeIdByBookId(bookId));
-		_getFile(model);
+			_getFile(model);
 
-		return "addAndEditBook/index";
+			return MVCCommandNames.VIEW_FORM;
+
+		} catch (Exception e) {
+			logger.error("Sorry, something wrong!", e);
+
+			return "redirect:/error";
+
+		}
 	}
 
-	@GetMapping("/deleteBook/bookId={bookId}")
+	@GetMapping("/deleteBook-id={bookId}")
 	public String deleteClass(@PathVariable(name = "bookId") Long bookId) {
 
 		bookService.deleteBook(bookId);
@@ -77,95 +87,53 @@ public class BookController {
 	}
 
 	@PostMapping("/saveAddBook")
-	public String saveAddClass(Model model, @RequestParam("bookId") Long bookId,
-			@RequestParam("bookName") String bookName, @RequestParam("author.authorId") Long authorId,
+	public String saveAddBook(Model model, BookDTO bookDTO,
 			@RequestParam(required = false, name = "bookTypeSelected") List<Long> listbookTypeId) {
+		List<String> errors = BookValidator.validate(bookDTO, bookService.getBooks());
 
-		if (!BookValidation._checkEmpty(bookName)) {
+		if (errors.size() > 0) {
+			model.addAttribute("url", MVCCommandNames.URL_SAVE_ADD);
+			model.addAttribute("errors", errors);
 
-			model.addAttribute("url", "/saveEditBook");
-			model.addAttribute("error", "The book's name is not null.");
 			_getFile(model);
-
-			return "addAndEditBook/index";
-
-		} else if (!BookValidation._checkExisted(bookId, bookName, bookService.getAllBooks())) {
-
-			model.addAttribute("url", "/saveEditBook");
-			model.addAttribute("error", "The book's name is existed.");
-			_getFile(model);
-
-			return "addAndEditBook/index";
+			return MVCCommandNames.VIEW_FORM;
 
 		} else {
-			BookEntity newBook = new BookEntity(bookName, authorService.getAuthorById(authorId));
-			bookService.saveBook(newBook);
 
-			if (listbookTypeId != null) {
-				for (Long bookTypeId : listbookTypeId) {
-					book_bookTypeService.saveBook_BookType(newBook, bookTypeService.getBookTypeById(bookTypeId));
-				}
-			}
+			bookService.saveBook(bookDTO);
+			book_bookTypeService.updateBook_BookType(bookDTO, listbookTypeId);
 		}
 		return "redirect:/books";
 	}
 
 	@PostMapping("/saveEditBook")
-	public String saveEditClass(Model model, @RequestParam("bookId") Long bookId,
-			@RequestParam("bookName") String bookName, @RequestParam("author.authorId") Long authorId,
+	public String saveEditBook(Model model, BookDTO bookDTO,
 			@RequestParam(required = false, name = "bookTypeSelected") List<Long> listbookTypeId) {
+		List<String> errors = BookValidator.validate(bookDTO, bookService.getBooks());
 
-		if (!BookValidation._checkEmpty(bookName)) {
+		if (errors.size() > 0) {
+			model.addAttribute("url", MVCCommandNames.URL_SAVE_EDIT);
+			model.addAttribute("errors", errors);
 
-			model.addAttribute("url", "/saveEditBook");
-			model.addAttribute("error", "The book's name is not null.");
 			_getFile(model);
-
-			return "addAndEditBook/index";
-
-		} else if (!BookValidation._checkExisted(bookId, bookName, bookService.getAllBooks())) {
-
-			model.addAttribute("url", "/saveEditBook");
-			model.addAttribute("error", "The book's name is existed.");
-			_getFile(model);
-
-			return "addAndEditBook/index";
+			return MVCCommandNames.VIEW_FORM;
 
 		} else {
-			BookEntity book = new BookEntity(bookId, bookName, authorService.getAuthorById(authorId));
-			bookService.updateBook(book);
 
-			List<Long> listBookTypeChecked = book_bookTypeService.getListBookTypeIdByBookId(bookId);
-			if (listbookTypeId != null) {
-				// check bookType existed in db
-				for (Long bookTypeId : listbookTypeId) {
-					if (BookValidation._checkBookTypeExisted(book_bookTypeService.getAllBook_BookType(), bookId,
-							bookTypeId)) {
-						book_bookTypeService.saveBook_BookType(book, bookTypeService.getBookTypeById(bookTypeId));
-					}
-				}
-				// check bookType is removed
-				for (Long bookTypeId : listbookTypeId) {
-					for (Long number : listBookTypeChecked) {
-						if (bookTypeId == number) {
-							book_bookTypeService.deleteBook_BookTypeByBookTypeId(bookTypeId);
-						}
-					}
-				}
-			} // check list bookType remove all
-			else {
-				book_bookTypeService.deleteBook_BookTypeDaoByBookId(bookId);
-			}
+			bookService.updateBook(bookDTO);
+			book_bookTypeService.updateBook_BookType(bookDTO, listbookTypeId);
 		}
 		return "redirect:/books";
 	}
 
-	public void _getFile(Model model) {
-		List<AuthorEntity> listAuthor = authorService.getAllAuthors();
-		List<BookTypeEntity> listBookType = bookTypeService.getAllBookTypes();
+	private void _getFile(Model model) {
+		List<AuthorDTO> listAuthor = authorService.getAuthors();
+		List<BookTypeDTO> listBookType = bookTypeService.getBookTypes();
 
 		model.addAttribute("listAuthor", listAuthor);
 		model.addAttribute("listBookType", listBookType);
 	}
+
+	private static final Logger logger = Logger.getLogger(BookController.class);
 
 }

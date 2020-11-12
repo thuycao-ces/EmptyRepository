@@ -2,12 +2,12 @@ package ces.springmvc.bookmanagementspringmvc.service;
 
 import java.util.List;
 
-import ces.springmvc.bookmanagementspringmvc.entity.BookTypeEntity;
+import ces.springmvc.bookmanagementspringmvc.dto.BookTypeDTO;
 
 public interface BookTypeService {
 
-	BookTypeEntity getBookTypeById(Long bookTypeId);
+	BookTypeDTO getBookTypeById(Long bookTypeId);
 
-	List<BookTypeEntity> getAllBookTypes();
+	List<BookTypeDTO> getBookTypes();
 
 }

@@ -14,26 +14,26 @@ import javax.persistence.Table;
 public class Book_BookTypeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long id;
+	private Long id;
 
-	@ManyToOne(cascade = {CascadeType.DETACH})
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "bookId")
-	BookEntity book;
+	private BookEntity book;
 
-	@ManyToOne(cascade = {CascadeType.DETACH})
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	@JoinColumn(name = "bookTypeId")
-	BookTypeEntity bookType;
+	private BookTypeEntity bookType;
 
 	public Book_BookTypeEntity() {
 		super();
 	}
-	
+
 	public Book_BookTypeEntity(BookEntity book, BookTypeEntity bookType) {
 		super();
 		this.book = book;
 		this.bookType = bookType;
 	}
-	
+
 	public Book_BookTypeEntity(Long id, BookEntity book, BookTypeEntity bookType) {
 		super();
 		this.id = id;

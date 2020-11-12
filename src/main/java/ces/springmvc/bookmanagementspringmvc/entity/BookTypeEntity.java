@@ -43,4 +43,5 @@ public class BookTypeEntity {
 	public void setBookTypeName(String bookTypeName) {
 		this.bookTypeName = bookTypeName;
 	}
+
 }

@@ -1,34 +1,20 @@
-package ces.springmvc.bookmanagementspringmvc.entity;
+package ces.springmvc.bookmanagementspringmvc.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class AuthorDTO {
 
-@Entity
-@Table(name = "authors")
-public class AuthorEntity {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long authorId;
 
-	@Column(name = "authorName")
 	private String authorName;
 
-	@Column(name = "authorAge")
 	private Long age;
 
-	@Column(name = "authorEmail")
 	private String email;
 
-	public AuthorEntity() {
+	public AuthorDTO() {
 		super();
 	}
 
-	public AuthorEntity(Long authorId, String authorName, Long age, String email) {
+	public AuthorDTO(Long authorId, String authorName, Long age, String email) {
 		super();
 		this.authorId = authorId;
 		this.authorName = authorName;
