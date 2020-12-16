@@ -3,7 +3,7 @@ package ces.springmvc.bookmanagementspringmvc.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
+import org.modelmapper.spi.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +17,7 @@ import ces.springmvc.bookmanagementspringmvc.service.BookService;
 import ces.springmvc.bookmanagementspringmvc.service.BookTypeService;
 import ces.springmvc.bookmanagementspringmvc.service.Book_BookTypeService;
 import ces.springmvc.bookmanagementspringmvc.validation.BookValidator;
+import ces.springmvc.bookmanagementspringmvc.constant.ErrorMessagesCommand;
 import ces.springmvc.bookmanagementspringmvc.constant.MVCCommandNames;
 import ces.springmvc.bookmanagementspringmvc.dto.AuthorDTO;
 import ces.springmvc.bookmanagementspringmvc.dto.BookDTO;
@@ -71,7 +72,7 @@ public class BookController {
 			return MVCCommandNames.VIEW_FORM;
 
 		} catch (Exception e) {
-			logger.error("Sorry, something wrong!", e);
+			logger.error(ErrorMessagesCommand.NOT_FOUND_ERROR_MESSAGES, e);
 
 			return "redirect:/error";
 
