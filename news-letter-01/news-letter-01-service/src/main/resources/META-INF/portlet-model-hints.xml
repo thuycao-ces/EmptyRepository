@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.training.news.letter.model.NewsLetter">
+		<field name="newsletterId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="issueDate" type="Date" />
+		<field name="issueNumber" type="Integer" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+	</model>
+	<model name="com.liferay.training.news.letter.model.NewsLetter_Articles">
+		<field name="newsletter_articles_Id" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="issueDate" type="Date" />
+		<field name="newsletterId" type="long" />
+		<field name="articlesId" type="long" />
+	</model>
+</model-hints>
