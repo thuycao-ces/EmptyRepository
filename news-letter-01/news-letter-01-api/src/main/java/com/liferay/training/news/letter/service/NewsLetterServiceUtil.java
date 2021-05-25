@@ -40,12 +40,38 @@ public class NewsLetterServiceUtil {
 	public static com.liferay.training.news.letter.model.NewsLetter
 			addNewsLetter(
 				long groupId, int issueNumber, String title, String description,
-				java.util.Date dueDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addNewsLetter(
-			groupId, issueNumber, title, description, dueDate, serviceContext);
+			groupId, issueNumber, title, description, serviceContext);
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			deleteNewsLetter(long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteNewsLetter(newsletterId);
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			getNewsLetter(long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getNewsLetter(newsletterId);
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			getNewsLetterByIssueNumber(int issueNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getNewsLetterByIssueNumber(issueNumber);
+	}
+
+	public static java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter> getNewsLetters() {
+
+		return getService().getNewsLetters();
 	}
 
 	/**
@@ -55,6 +81,17 @@ public class NewsLetterServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			updateNewsLetter(
+				long newsletterId, int issueNumber, String title,
+				String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsLetter(
+			newsletterId, issueNumber, title, description, serviceContext);
 	}
 
 	public static NewsLetterService getService() {

@@ -64,18 +64,111 @@ public class NewsLetterServiceSoap {
 	public static com.liferay.training.news.letter.model.NewsLetterSoap
 			addNewsLetter(
 				long groupId, int issueNumber, String title, String description,
-				java.util.Date dueDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.training.news.letter.model.NewsLetter returnValue =
 				NewsLetterServiceUtil.addNewsLetter(
-					groupId, issueNumber, title, description, dueDate,
+					groupId, issueNumber, title, description, serviceContext);
+
+			return com.liferay.training.news.letter.model.NewsLetterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetterSoap
+			deleteNewsLetter(long newsletterId)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter returnValue =
+				NewsLetterServiceUtil.deleteNewsLetter(newsletterId);
+
+			return com.liferay.training.news.letter.model.NewsLetterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetterSoap
+			getNewsLetter(long newsletterId)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter returnValue =
+				NewsLetterServiceUtil.getNewsLetter(newsletterId);
+
+			return com.liferay.training.news.letter.model.NewsLetterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetterSoap
+			getNewsLetterByIssueNumber(int issueNumber)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter returnValue =
+				NewsLetterServiceUtil.getNewsLetterByIssueNumber(issueNumber);
+
+			return com.liferay.training.news.letter.model.NewsLetterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetterSoap
+			updateNewsLetter(
+				long newsletterId, int issueNumber, String title,
+				String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter returnValue =
+				NewsLetterServiceUtil.updateNewsLetter(
+					newsletterId, issueNumber, title, description,
 					serviceContext);
 
 			return com.liferay.training.news.letter.model.NewsLetterSoap.
 				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetterSoap[]
+			getNewsLetters()
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.training.news.letter.model.NewsLetter>
+				returnValue = NewsLetterServiceUtil.getNewsLetters();
+
+			return com.liferay.training.news.letter.model.NewsLetterSoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

@@ -37,6 +37,15 @@ public class NewsLetter_ArticlesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.training.news.letter.service.impl.NewsLetter_ArticlesLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.training.news.letter.model.NewsLetter_Articles
+			addNewsLetter_Articles(
+				long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addNewsLetter_Articles(
+			newsletterId, articlesId, serviceContext);
+	}
 
 	/**
 	 * Adds the news letter_ articles to the database. Also notifies the appropriate model listeners.
@@ -207,6 +216,13 @@ public class NewsLetter_ArticlesLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter_Articles>
+			getNewsLetter_Articles() {
+
+		return getService().getNewsLetter_Articles();
+	}
+
 	/**
 	 * Returns the news letter_ articles with the primary key.
 	 *
@@ -265,6 +281,16 @@ public class NewsLetter_ArticlesLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter_Articles
+			updateNewsLetter_Articles(
+				long newsletter_articles_Id, long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsLetter_Articles(
+			newsletter_articles_Id, newsletterId, articlesId, serviceContext);
 	}
 
 	/**

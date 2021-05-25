@@ -1,10 +1,12 @@
 Bundle-Name: news-letter-01-api
 Bundle-SymbolicName: com.liferay.training.news.letter.api
 Bundle-Version: 1.0.0
-Export-Package:\
+Export-Package: \
 	com.liferay.training.news.letter.exception,\
 	com.liferay.training.news.letter.model,\
 	com.liferay.training.news.letter.service,\
-	com.liferay.training.news.letter.service.persistence
+	com.liferay.training.news.letter.service.persistence,\
+	com.liferay.training.news.letter.validator,\
+	com.liferay.training.news.letter.validator.impl
 -check: EXPORTS
 -includeresource: META-INF/service.xml=../news-letter-01-service/service.xml

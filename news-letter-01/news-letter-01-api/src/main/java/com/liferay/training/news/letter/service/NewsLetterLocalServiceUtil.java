@@ -37,6 +37,15 @@ public class NewsLetterLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.training.news.letter.service.impl.NewsLetterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.training.news.letter.model.NewsLetter
+			addNewsLetter(
+				long groupId, int issueNumber, String title, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addNewsLetter(
+			groupId, issueNumber, title, description, serviceContext);
+	}
 
 	/**
 	 * Adds the news letter to the database. Also notifies the appropriate model listeners.
@@ -219,6 +228,12 @@ public class NewsLetterLocalServiceUtil {
 		return getService().getNewsLetter(newsletterId);
 	}
 
+	public static java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter> getNewsLetters() {
+
+		return getService().getNewsLetters();
+	}
+
 	/**
 	 * Returns a range of all the news letters.
 	 *
@@ -263,6 +278,17 @@ public class NewsLetterLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			updateNewsLetter(
+				long newsletterId, int issueNumber, String title,
+				String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsLetter(
+			newsletterId, issueNumber, title, description, serviceContext);
 	}
 
 	/**

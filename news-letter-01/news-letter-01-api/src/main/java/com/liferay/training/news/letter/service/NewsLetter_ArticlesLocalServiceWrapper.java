@@ -33,6 +33,17 @@ public class NewsLetter_ArticlesLocalServiceWrapper
 		_newsLetter_ArticlesLocalService = newsLetter_ArticlesLocalService;
 	}
 
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter_Articles
+			addNewsLetter_Articles(
+				long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetter_ArticlesLocalService.addNewsLetter_Articles(
+			newsletterId, articlesId, serviceContext);
+	}
+
 	/**
 	 * Adds the news letter_ articles to the database. Also notifies the appropriate model listeners.
 	 *
@@ -221,6 +232,14 @@ public class NewsLetter_ArticlesLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter_Articles>
+			getNewsLetter_Articles() {
+
+		return _newsLetter_ArticlesLocalService.getNewsLetter_Articles();
+	}
+
 	/**
 	 * Returns the news letter_ articles with the primary key.
 	 *
@@ -287,6 +306,17 @@ public class NewsLetter_ArticlesLocalServiceWrapper
 
 		return _newsLetter_ArticlesLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter_Articles
+			updateNewsLetter_Articles(
+				long newsletter_articles_Id, long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetter_ArticlesLocalService.updateNewsLetter_Articles(
+			newsletter_articles_Id, newsletterId, articlesId, serviceContext);
 	}
 
 	/**

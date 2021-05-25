@@ -1,50 +1,57 @@
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
 package com.liferay.training.news.letter.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.training.news.letter.model.NewsLetter_Articles;
 import com.liferay.training.news.letter.service.base.NewsLetter_ArticlesServiceBaseImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
-/**
- * The implementation of the news letter_ articles remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.training.news.letter.service.NewsLetter_ArticlesService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see NewsLetter_ArticlesServiceBaseImpl
- */
 @Component(
-	property = {
+	property = { 
 		"json.web.service.context.name=newsletter",
-		"json.web.service.context.path=NewsLetter_Articles"
-	},
-	service = AopService.class
-)
-public class NewsLetter_ArticlesServiceImpl
-	extends NewsLetter_ArticlesServiceBaseImpl {
+		"json.web.service.context.path=NewsLetter_Articles" }, 
+	service = AopService.class)
+public class NewsLetter_ArticlesServiceImpl extends NewsLetter_ArticlesServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.training.news.letter.service.NewsLetter_ArticlesServiceUtil</code> to access the news letter_ articles remote service.
-	 */
+	public NewsLetter_Articles addNewsLetter_Articles(long newsletterId, long articlesId, ServiceContext serviceContext)
+			throws PortalException {
+
+		return newsLetter_ArticlesLocalService.addNewsLetter_Articles(newsletterId, articlesId, serviceContext);
+	}
+
+	public NewsLetter_Articles deleteNewsLetter_Articles(long id) throws PortalException {
+
+		NewsLetter_Articles newsLetter_Articles = newsLetter_ArticlesLocalService.getNewsLetter_Articles(id);
+
+		return newsLetter_ArticlesLocalService.deleteNewsLetter_Articles(newsLetter_Articles);
+	}
+
+	public List<NewsLetter_Articles> getNewsLetter_Articles() {
+		return newsLetter_ArticlesLocalService.getNewsLetter_Articles();
+	}
+
+	public List<NewsLetter_Articles> getNewsLetter_ArticlesByNewsletterId(long newsletterId) {
+		List<NewsLetter_Articles> newsLetter_Articles = getNewsLetter_Articles();
+
+		List<NewsLetter_Articles> newsLetter_Articles2 = new ArrayList<NewsLetter_Articles>();
+		for (NewsLetter_Articles newsArticles : newsLetter_Articles) {
+			if (newsArticles.getNewsletterId() == newsletterId) {
+				newsLetter_Articles2.add(newsArticles);
+			}
+		}
+		return newsLetter_Articles2;
+	}
+
+	public NewsLetter_Articles updateNewsLetter_Articles(long newsletter_articles_Id, long newsletterId,
+			long articlesId, ServiceContext serviceContext) throws PortalException {
+
+		return newsLetter_ArticlesLocalService.updateNewsLetter_Articles(newsletter_articles_Id, newsletterId,
+				articlesId, serviceContext);
+
+	}
 }

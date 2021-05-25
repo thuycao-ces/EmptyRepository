@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,9 @@ public interface NewsLetter_ArticlesLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NewsLetter_ArticlesLocalServiceUtil} to access the news letter_ articles local service. Add custom service methods to <code>com.liferay.training.news.letter.service.impl.NewsLetter_ArticlesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public NewsLetter_Articles addNewsLetter_Articles(
+			long newsletterId, long articlesId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the news letter_ articles to the database. Also notifies the appropriate model listeners.
@@ -186,6 +190,9 @@ public interface NewsLetter_ArticlesLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NewsLetter_Articles> getNewsLetter_Articles();
+
 	/**
 	 * Returns the news letter_ articles with the primary key.
 	 *
@@ -234,6 +241,11 @@ public interface NewsLetter_ArticlesLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public NewsLetter_Articles updateNewsLetter_Articles(
+			long newsletter_articles_Id, long newsletterId, long articlesId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

@@ -54,7 +54,7 @@ public class NewsLetterServiceHttp {
 	public static com.liferay.training.news.letter.model.NewsLetter
 			addNewsLetter(
 				HttpPrincipal httpPrincipal, long groupId, int issueNumber,
-				String title, String description, java.util.Date dueDate,
+				String title, String description,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -64,7 +64,7 @@ public class NewsLetterServiceHttp {
 				_addNewsLetterParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, issueNumber, title, description, dueDate,
+				methodKey, groupId, issueNumber, title, description,
 				serviceContext);
 
 			Object returnObj = null;
@@ -95,14 +95,224 @@ public class NewsLetterServiceHttp {
 		}
 	}
 
+	public static com.liferay.training.news.letter.model.NewsLetter
+			deleteNewsLetter(HttpPrincipal httpPrincipal, long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NewsLetterServiceUtil.class, "deleteNewsLetter",
+				_deleteNewsLetterParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, newsletterId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.training.news.letter.model.NewsLetter)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			getNewsLetter(HttpPrincipal httpPrincipal, long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NewsLetterServiceUtil.class, "getNewsLetter",
+				_getNewsLetterParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, newsletterId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.training.news.letter.model.NewsLetter)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			getNewsLetterByIssueNumber(
+				HttpPrincipal httpPrincipal, int issueNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NewsLetterServiceUtil.class, "getNewsLetterByIssueNumber",
+				_getNewsLetterByIssueNumberParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, issueNumber);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.training.news.letter.model.NewsLetter)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter
+			updateNewsLetter(
+				HttpPrincipal httpPrincipal, long newsletterId, int issueNumber,
+				String title, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NewsLetterServiceUtil.class, "updateNewsLetter",
+				_updateNewsLetterParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, newsletterId, issueNumber, title, description,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.training.news.letter.model.NewsLetter)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter> getNewsLetters(
+			HttpPrincipal httpPrincipal) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NewsLetterServiceUtil.class, "getNewsLetters",
+				_getNewsLettersParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.training.news.letter.model.NewsLetter>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		NewsLetterServiceHttp.class);
 
 	private static final Class<?>[] _addNewsLetterParameterTypes0 =
 		new Class[] {
 			long.class, int.class, String.class, String.class,
-			java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _deleteNewsLetterParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getNewsLetterParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getNewsLetterByIssueNumberParameterTypes3 =
+		new Class[] {int.class};
+	private static final Class<?>[] _updateNewsLetterParameterTypes4 =
+		new Class[] {
+			long.class, int.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _getNewsLettersParameterTypes5 =
+		new Class[] {};
 
 }

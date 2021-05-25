@@ -14,9 +14,15 @@
 
 package com.liferay.training.news.letter.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.training.news.letter.service.NewsLetter_ArticlesServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.training.news.letter.service.NewsLetter_ArticlesServiceUtil</code> service
+ * <code>NewsLetter_ArticlesServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,116 @@ package com.liferay.training.news.letter.service.http;
  * @generated
  */
 public class NewsLetter_ArticlesServiceSoap {
+
+	public static com.liferay.training.news.letter.model.NewsLetter_ArticlesSoap
+			addNewsLetter_Articles(
+				long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter_Articles
+				returnValue =
+					NewsLetter_ArticlesServiceUtil.addNewsLetter_Articles(
+						newsletterId, articlesId, serviceContext);
+
+			return com.liferay.training.news.letter.model.
+				NewsLetter_ArticlesSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter_ArticlesSoap
+			deleteNewsLetter_Articles(long id)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter_Articles
+				returnValue =
+					NewsLetter_ArticlesServiceUtil.deleteNewsLetter_Articles(
+						id);
+
+			return com.liferay.training.news.letter.model.
+				NewsLetter_ArticlesSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.training.news.letter.model.NewsLetter_ArticlesSoap[]
+				getNewsLetter_Articles()
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.training.news.letter.model.NewsLetter_Articles>
+					returnValue =
+						NewsLetter_ArticlesServiceUtil.getNewsLetter_Articles();
+
+			return com.liferay.training.news.letter.model.
+				NewsLetter_ArticlesSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.training.news.letter.model.NewsLetter_ArticlesSoap[]
+				getNewsLetter_ArticlesByNewsletterId(long newsletterId)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.training.news.letter.model.NewsLetter_Articles>
+					returnValue =
+						NewsLetter_ArticlesServiceUtil.
+							getNewsLetter_ArticlesByNewsletterId(newsletterId);
+
+			return com.liferay.training.news.letter.model.
+				NewsLetter_ArticlesSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter_ArticlesSoap
+			updateNewsLetter_Articles(
+				long newsletter_articles_Id, long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.news.letter.model.NewsLetter_Articles
+				returnValue =
+					NewsLetter_ArticlesServiceUtil.updateNewsLetter_Articles(
+						newsletter_articles_Id, newsletterId, articlesId,
+						serviceContext);
+
+			return com.liferay.training.news.letter.model.
+				NewsLetter_ArticlesSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NewsLetter_ArticlesServiceSoap.class);
+
 }

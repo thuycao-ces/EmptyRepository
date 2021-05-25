@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,10 @@ public interface NewsLetterLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NewsLetterLocalServiceUtil} to access the news letter local service. Add custom service methods to <code>com.liferay.training.news.letter.service.impl.NewsLetterLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public NewsLetter addNewsLetter(
+			long groupId, int issueNumber, String title, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the news letter to the database. Also notifies the appropriate model listeners.
@@ -191,6 +196,9 @@ public interface NewsLetterLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public NewsLetter getNewsLetter(long newsletterId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NewsLetter> getNewsLetters();
+
 	/**
 	 * Returns a range of all the news letters.
 	 *
@@ -226,6 +234,11 @@ public interface NewsLetterLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public NewsLetter updateNewsLetter(
+			long newsletterId, int issueNumber, String title,
+			String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

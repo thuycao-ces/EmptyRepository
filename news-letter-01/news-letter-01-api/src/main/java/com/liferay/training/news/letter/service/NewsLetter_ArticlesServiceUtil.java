@@ -37,6 +37,36 @@ public class NewsLetter_ArticlesServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.training.news.letter.service.impl.NewsLetter_ArticlesServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.training.news.letter.model.NewsLetter_Articles
+			addNewsLetter_Articles(
+				long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addNewsLetter_Articles(
+			newsletterId, articlesId, serviceContext);
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter_Articles
+			deleteNewsLetter_Articles(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteNewsLetter_Articles(id);
+	}
+
+	public static java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter_Articles>
+			getNewsLetter_Articles() {
+
+		return getService().getNewsLetter_Articles();
+	}
+
+	public static java.util.List
+		<com.liferay.training.news.letter.model.NewsLetter_Articles>
+			getNewsLetter_ArticlesByNewsletterId(long newsletterId) {
+
+		return getService().getNewsLetter_ArticlesByNewsletterId(newsletterId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -45,6 +75,16 @@ public class NewsLetter_ArticlesServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.training.news.letter.model.NewsLetter_Articles
+			updateNewsLetter_Articles(
+				long newsletter_articles_Id, long newsletterId, long articlesId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsLetter_Articles(
+			newsletter_articles_Id, newsletterId, articlesId, serviceContext);
 	}
 
 	public static NewsLetter_ArticlesService getService() {

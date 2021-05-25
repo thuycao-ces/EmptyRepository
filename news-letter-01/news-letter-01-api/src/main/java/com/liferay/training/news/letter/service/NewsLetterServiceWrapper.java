@@ -33,12 +33,42 @@ public class NewsLetterServiceWrapper
 	@Override
 	public com.liferay.training.news.letter.model.NewsLetter addNewsLetter(
 			long groupId, int issueNumber, String title, String description,
-			java.util.Date dueDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _newsLetterService.addNewsLetter(
-			groupId, issueNumber, title, description, dueDate, serviceContext);
+			groupId, issueNumber, title, description, serviceContext);
+	}
+
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter deleteNewsLetter(
+			long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetterService.deleteNewsLetter(newsletterId);
+	}
+
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter getNewsLetter(
+			long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetterService.getNewsLetter(newsletterId);
+	}
+
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter
+			getNewsLetterByIssueNumber(int issueNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetterService.getNewsLetterByIssueNumber(issueNumber);
+	}
+
+	@Override
+	public java.util.List<com.liferay.training.news.letter.model.NewsLetter>
+		getNewsLetters() {
+
+		return _newsLetterService.getNewsLetters();
 	}
 
 	/**
@@ -49,6 +79,17 @@ public class NewsLetterServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _newsLetterService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter updateNewsLetter(
+			long newsletterId, int issueNumber, String title,
+			String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetterService.updateNewsLetter(
+			newsletterId, issueNumber, title, description, serviceContext);
 	}
 
 	@Override

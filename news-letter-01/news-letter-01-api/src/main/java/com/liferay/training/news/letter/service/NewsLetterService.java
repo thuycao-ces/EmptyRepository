@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.training.news.letter.model.NewsLetter;
 
-import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -53,8 +54,21 @@ public interface NewsLetterService extends BaseService {
 	 */
 	public NewsLetter addNewsLetter(
 			long groupId, int issueNumber, String title, String description,
-			Date dueDate, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException;
+
+	public NewsLetter deleteNewsLetter(long newsletterId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NewsLetter getNewsLetter(long newsletterId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NewsLetter getNewsLetterByIssueNumber(int issueNumber)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NewsLetter> getNewsLetters();
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -62,5 +76,10 @@ public interface NewsLetterService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public NewsLetter updateNewsLetter(
+			long newsletterId, int issueNumber, String title,
+			String description, ServiceContext serviceContext)
+		throws PortalException;
 
 }

@@ -32,6 +32,16 @@ public class NewsLetterLocalServiceWrapper
 		_newsLetterLocalService = newsLetterLocalService;
 	}
 
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter addNewsLetter(
+			long groupId, int issueNumber, String title, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetterLocalService.addNewsLetter(
+			groupId, issueNumber, title, description, serviceContext);
+	}
+
 	/**
 	 * Adds the news letter to the database. Also notifies the appropriate model listeners.
 	 *
@@ -223,6 +233,13 @@ public class NewsLetterLocalServiceWrapper
 		return _newsLetterLocalService.getNewsLetter(newsletterId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.training.news.letter.model.NewsLetter>
+		getNewsLetters() {
+
+		return _newsLetterLocalService.getNewsLetters();
+	}
+
 	/**
 	 * Returns a range of all the news letters.
 	 *
@@ -270,6 +287,17 @@ public class NewsLetterLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _newsLetterLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.training.news.letter.model.NewsLetter updateNewsLetter(
+			long newsletterId, int issueNumber, String title,
+			String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsLetterLocalService.updateNewsLetter(
+			newsletterId, issueNumber, title, description, serviceContext);
 	}
 
 	/**
