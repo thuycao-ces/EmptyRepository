@@ -7,8 +7,8 @@ create table NEWSLETTER_NewsLetter (
 	createDate DATE null,
 	issueDate DATE null,
 	issueNumber INTEGER,
-	title VARCHAR(75) null,
-	description VARCHAR(75) null
+	title VARCHAR(300) null,
+	description VARCHAR(300) null
 );
 
 create table NEWSLETTER_NewsLetter_Articles (

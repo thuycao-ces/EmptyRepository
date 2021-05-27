@@ -55,7 +55,7 @@ public class ViewSingleNewsLetterMVCRenserCommand implements MVCRenderCommand {
 			String redirect = renderRequest.getParameter("redirect");
 
 			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(redirect);
+			portletDisplay.setURLBack("/");
 
 			return "/newsletter/view_newsletter.jsp";
 

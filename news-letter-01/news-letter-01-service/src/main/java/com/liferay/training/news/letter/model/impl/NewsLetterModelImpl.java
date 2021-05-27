@@ -95,7 +95,7 @@ public class NewsLetterModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NEWSLETTER_NewsLetter (newsletterId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,issueDate DATE null,issueNumber INTEGER,title VARCHAR(75) null,description VARCHAR(75) null)";
+		"create table NEWSLETTER_NewsLetter (newsletterId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,issueDate DATE null,issueNumber INTEGER,title VARCHAR(300) null,description VARCHAR(300) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NEWSLETTER_NewsLetter";

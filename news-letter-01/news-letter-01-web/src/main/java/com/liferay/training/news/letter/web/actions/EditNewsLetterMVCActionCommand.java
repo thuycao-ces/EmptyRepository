@@ -92,9 +92,7 @@ public class EditNewsLetterMVCActionCommand extends BaseMVCActionCommand {
 
 					if (!listArticlesIdsSelected(newsletterId).contains(articlesId)) {
 						_newsLetter_ArticlesService.addNewsLetter_Articles(newsletterId, articlesId, serviceContext);
-
 					}
-
 				}
 			} else {
 
@@ -120,7 +118,6 @@ public class EditNewsLetterMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return listIds;
-
 	}
 
 	@Reference

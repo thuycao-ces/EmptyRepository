@@ -65,7 +65,6 @@ public class EditNewsLetterMVCRenderCommand implements MVCRenderCommand {
 	
 	private Set<Long> _getNewsletterArticlesSelected(long newsletterId){
 		
-		System.out.println("AAAAAAAAAAAAA" + newsletterId);
 		List<NewsLetter_Articles> newsLetter_Articles = newsLetter_ArticlesService.getNewsLetter_ArticlesByNewsletterId(newsletterId);
 
 		Set<Long> articlesSelected = new LinkedHashSet<Long>();
