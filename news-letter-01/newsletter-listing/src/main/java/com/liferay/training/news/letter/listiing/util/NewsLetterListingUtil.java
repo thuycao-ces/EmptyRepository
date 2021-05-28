@@ -19,7 +19,9 @@ import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = NewsLetterListingUtil.class, immediate = true)
+@Component(
+	service = NewsLetterListingUtil.class, 
+	immediate = true)
 public class NewsLetterListingUtil {
 
 	public List<JournalArticle> getArticles() {
@@ -33,14 +35,15 @@ public class NewsLetterListingUtil {
 		DynamicQuery newsletterQuery = newsLetterLocalService.dynamicQuery().addOrder(order);
 
 		return newsLetterLocalService.dynamicQuery(newsletterQuery);
-
 	}
 
 	public List<NewsLetter_Articles> getNewsLetterArticles() {
+
 		return newsLetter_ArticlesService.getNewsLetter_Articles();
 	}
 
 	public List<NewsLetter_Articles> getNewsLetterArticlesByNewsLetterId(long newsletterId) {
+
 		return newsLetter_ArticlesService.getNewsLetter_ArticlesByNewsletterId(newsletterId);
 	}
 
@@ -60,31 +63,31 @@ public class NewsLetterListingUtil {
 	}
 
 	public HashMap<Long, String> getDateTimesFromNewsLetter(List<NewsLetter> newsLetters) {
-		
-	    HashMap<Long, String> months = new HashMap<Long, String>();
+
+		HashMap<Long, String> months = new HashMap<Long, String>();
 
 		for (NewsLetter newsLetter : newsLetters) {
-			
+
 			String patternMonth = "MMMM";
 			String patternYear = "yyyy";
 
 			String month = formatDateTimes(patternMonth).format(newsLetter.getIssueDate());
 			String year = formatDateTimes(patternYear).format(newsLetter.getIssueDate());
-			
+
 			String value = month + "_" + year;
-			
-			if(!months.containsValue(value)) {
+
+			if (!months.containsValue(value)) {
 				months.put(newsLetter.getNewsletterId(), value);
 			}
-				
+
 		}
 
 		return months;
 	}
-	
+
 	public Set<String> getMonthsFromNewsLetter(List<NewsLetter> newsLetters) {
-		
-	    Set<String> months = new LinkedHashSet<String>();
+
+		Set<String> months = new LinkedHashSet<String>();
 
 		for (NewsLetter newsLetter : newsLetters) {
 
@@ -93,27 +96,25 @@ public class NewsLetterListingUtil {
 			String month = formatDateTimes(patternMonth).format(newsLetter.getIssueDate());
 
 			months.add(month);
-			
+
 		}
 
 		return months;
 	}
-	
-	public SimpleDateFormat formatDateTimes(String pattern) {
-	    
-	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		
-	    return simpleDateFormat;
-	}
-	
-	public String [] splitString(String string) {
-		
-		String[] array = string.split("_");
-		
-		return array;
 
+	public SimpleDateFormat formatDateTimes(String pattern) {
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat;
 	}
-	
+
+	public String[] splitString(String string) {
+
+		String[] array = string.split("_");
+
+		return array;
+	}
 
 	@Reference
 	JournalArticleLocalService journalArticleLocalService;

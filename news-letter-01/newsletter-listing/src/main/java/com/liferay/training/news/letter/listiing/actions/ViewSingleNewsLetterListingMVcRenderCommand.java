@@ -36,14 +36,15 @@ public class ViewSingleNewsLetterListingMVcRenderCommand implements MVCRenderCom
 
 		long newsletterId = ParamUtil.getLong(renderRequest, "newsletterId");
 
-	    try {
+		try {
 			NewsLetter newsLetter = newsLetterLocalService.getNewsLetter(newsletterId);
-		
+
 			renderRequest.setAttribute("newsletter", newsLetter);
-			renderRequest.setAttribute("newsletter_articles", newsLetter_ArticlesService.getNewsLetter_ArticlesByNewsletterId(newsletterId));
-			renderRequest.setAttribute("articles", newsLetterListingUtil.getArticles());		
-		    
-			renderRequest.setAttribute("formater", newsLetterListingUtil.formatDateTimes("MMMM dd yyyy"));		
+			renderRequest.setAttribute("newsletter_articles",
+					newsLetter_ArticlesService.getNewsLetter_ArticlesByNewsletterId(newsletterId));
+			renderRequest.setAttribute("articles", newsLetterListingUtil.getArticles());
+
+			renderRequest.setAttribute("formater", newsLetterListingUtil.formatDateTimes("MMMM dd yyyy"));
 
 			// Set back icon visible.
 
@@ -55,8 +56,8 @@ public class ViewSingleNewsLetterListingMVcRenderCommand implements MVCRenderCom
 			portletDisplay.setURLBack(redirect);
 
 			return "/newsletter/view_detail.jsp";
-			
-	    } catch (PortalException pe) {
+
+		} catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
 

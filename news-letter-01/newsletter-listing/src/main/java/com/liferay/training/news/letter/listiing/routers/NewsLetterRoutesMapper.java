@@ -7,20 +7,18 @@ import com.liferay.training.news.letter.listiing.constants.NewsletterListingPort
 import org.osgi.service.component.annotations.Component;
 
 @Component(
-	 property = {
-	 "com.liferay.portlet.friendly-url-routes=META-INF/routes/routes.xml",
-	 "javax.portlet.name=" + NewsletterListingPortletKeys.NEWSLETTERLISTING
-	 },
-	 service = FriendlyURLMapper.class
-	 )
-public class NewsLetterRoutesMapper extends DefaultFriendlyURLMapper{
+	property = { 
+		"com.liferay.portlet.friendly-url-routes=META-INF/routes/routes.xml",
+		"javax.portlet.name=" + NewsletterListingPortletKeys.NEWSLETTERLISTING }, 
+	service = FriendlyURLMapper.class)
+public class NewsLetterRoutesMapper extends DefaultFriendlyURLMapper {
 
-	 @Override
-	 public String getMapping() {
+	@Override
+	public String getMapping() {
 
-		 return _MAPPING;
-	 }
-	 
-	 private static final String _MAPPING = "newsletter";
+		return _MAPPING;
+	}
+
+	private static final String _MAPPING = "newsletter";
 
 }

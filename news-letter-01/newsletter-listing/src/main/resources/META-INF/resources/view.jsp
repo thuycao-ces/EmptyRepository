@@ -1,6 +1,5 @@
 <%@ include file="/init.jsp"%>
 
-${ currentURL}
 <liferay-ui:tabs
 	names="${years}"
 	refresh="false"
