@@ -1,4 +1,0 @@
-Bundle-Name: news-letter-01-web
-Bundle-SymbolicName: com.liferay.training.news.letter.web
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.training.news.letter.web.constants

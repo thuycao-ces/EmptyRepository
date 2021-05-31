@@ -14,7 +14,6 @@
 
 <%@ page import="com.liferay.training.news.letter.model.*" %>
 <%@ page import="com.liferay.training.news.letter.listiing.constants.*" %>
-<%@ page import="com.liferay.training.news.letter.listiing.display.context.NewsLetterListingManagermentToolbarDisplayContext" %>
 
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="java.text.SimpleDateFormat"%>
