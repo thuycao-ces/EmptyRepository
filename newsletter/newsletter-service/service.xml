@@ -25,6 +25,7 @@
         <column name="title" type="String"></column>
         <column name="description" type="String"></column>
         <column name="issueDate" type="Date"></column>
+        <column name="journalArticleId" type="long"></column>
         
         <reference entity="Group" package-path="com.liferay.portal"></reference>
         <reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
@@ -53,6 +54,7 @@
         <column name="issueNumber" type="Integer"></column>
         <column name="title" type="String"></column>
         <column name="content" type="String"></column>
+        <column name="journalArticleId" type="long"></column>
 
         <reference entity="Group" package-path="com.liferay.portal"></reference>
         <reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />

@@ -75,7 +75,8 @@ public class NewsletterArticleModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"author", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"issueNumber", Types.INTEGER},
-		{"title", Types.VARCHAR}, {"content", Types.VARCHAR}
+		{"title", Types.VARCHAR}, {"content", Types.VARCHAR},
+		{"journalArticleId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,10 +93,11 @@ public class NewsletterArticleModelImpl
 		TABLE_COLUMNS_MAP.put("issueNumber", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("journalArticleId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NEWSLETTER_NewsletterArticle (newsletterArticleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,author VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNumber INTEGER,title VARCHAR(75) null,content VARCHAR(75) null)";
+		"create table NEWSLETTER_NewsletterArticle (newsletterArticleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,author VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNumber INTEGER,title VARCHAR(75) null,content VARCHAR(75) null,journalArticleId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NEWSLETTER_NewsletterArticle";
@@ -143,6 +145,7 @@ public class NewsletterArticleModelImpl
 		model.setIssueNumber(soapModel.getIssueNumber());
 		model.setTitle(soapModel.getTitle());
 		model.setContent(soapModel.getContent());
+		model.setJournalArticleId(soapModel.getJournalArticleId());
 
 		return model;
 	}
@@ -352,6 +355,12 @@ public class NewsletterArticleModelImpl
 			"content",
 			(BiConsumer<NewsletterArticle, String>)
 				NewsletterArticle::setContent);
+		attributeGetterFunctions.put(
+			"journalArticleId", NewsletterArticle::getJournalArticleId);
+		attributeSetterBiConsumers.put(
+			"journalArticleId",
+			(BiConsumer<NewsletterArticle, Long>)
+				NewsletterArticle::setJournalArticleId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -506,6 +515,17 @@ public class NewsletterArticleModelImpl
 		_content = content;
 	}
 
+	@JSON
+	@Override
+	public long getJournalArticleId() {
+		return _journalArticleId;
+	}
+
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		_journalArticleId = journalArticleId;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
@@ -549,6 +569,7 @@ public class NewsletterArticleModelImpl
 		newsletterArticleImpl.setIssueNumber(getIssueNumber());
 		newsletterArticleImpl.setTitle(getTitle());
 		newsletterArticleImpl.setContent(getContent());
+		newsletterArticleImpl.setJournalArticleId(getJournalArticleId());
 
 		newsletterArticleImpl.resetOriginalValues();
 
@@ -672,6 +693,8 @@ public class NewsletterArticleModelImpl
 			newsletterArticleCacheModel.content = null;
 		}
 
+		newsletterArticleCacheModel.journalArticleId = getJournalArticleId();
+
 		return newsletterArticleCacheModel;
 	}
 
@@ -759,6 +782,7 @@ public class NewsletterArticleModelImpl
 	private Integer _issueNumber;
 	private String _title;
 	private String _content;
+	private long _journalArticleId;
 	private NewsletterArticle _escapedModel;
 
 }

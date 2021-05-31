@@ -33,6 +33,43 @@ public class NewsletterArticleServiceWrapper
 		_newsletterArticleService = newsletterArticleService;
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+			addNewsletterArticle(
+				long journalArticleId, int issueNumber, String title,
+				String content, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleService.addNewsletterArticle(
+			journalArticleId, issueNumber, title, content, userId);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+			deleteNewsletterArticleByJournalArticleId(long journalArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleService.
+			deleteNewsletterArticleByJournalArticleId(journalArticleId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.training.newsletter.model.NewsletterArticle>
+			getNewsletterArticleByIssueNumber(int issueNumber) {
+
+		return _newsletterArticleService.getNewsletterArticleByIssueNumber(
+			issueNumber);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+		getNewsletterByJournalActicleId(long journalArticleId) {
+
+		return _newsletterArticleService.getNewsletterByJournalActicleId(
+			journalArticleId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +78,17 @@ public class NewsletterArticleServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _newsletterArticleService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+			updateNewsletterArticle(
+				long newsletterArticlesId, int issueNumber, String title,
+				String content)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleService.updateNewsletterArticle(
+			newsletterArticlesId, issueNumber, title, content);
 	}
 
 	@Override

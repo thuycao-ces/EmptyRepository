@@ -13,6 +13,7 @@
 		<field name="title" type="String" />
 		<field name="description" type="String" />
 		<field name="issueDate" type="Date" />
+		<field name="journalArticleId" type="long" />
 	</model>
 	<model name="com.liferay.training.newsletter.model.NewsletterArticle">
 		<field name="newsletterArticleId" type="long" />
@@ -25,5 +26,6 @@
 		<field name="issueNumber" type="Integer" />
 		<field name="title" type="String" />
 		<field name="content" type="String" />
+		<field name="journalArticleId" type="long" />
 	</model>
 </model-hints>

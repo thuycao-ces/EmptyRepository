@@ -37,6 +37,33 @@ public class NewsletterServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.training.newsletter.model.Newsletter
+			addNewsletter(
+				long journalArticleId, int issueNumber, String title,
+				String description, java.util.Date issueDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addNewsletter(
+			journalArticleId, issueNumber, title, description, issueDate);
+	}
+
+	public static void deleteNewsletterByJournalArticleId(long journalArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteNewsletterByJournalArticleId(journalArticleId);
+	}
+
+	public static com.liferay.training.newsletter.model.Newsletter
+		getNewsletterByIssueNumber(int issueNumber) {
+
+		return getService().getNewsletterByIssueNumber(issueNumber);
+	}
+
+	public static com.liferay.training.newsletter.model.Newsletter
+		getNewsletterByJournalActicleId(long journalArticleId) {
+
+		return getService().getNewsletterByJournalActicleId(journalArticleId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -45,6 +72,16 @@ public class NewsletterServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.training.newsletter.model.Newsletter
+			updateNewsletter(
+				long newsletterId, int issueNumber, String title,
+				String description, java.util.Date issueDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsletter(
+			newsletterId, issueNumber, title, description, issueDate);
 	}
 
 	public static NewsletterService getService() {

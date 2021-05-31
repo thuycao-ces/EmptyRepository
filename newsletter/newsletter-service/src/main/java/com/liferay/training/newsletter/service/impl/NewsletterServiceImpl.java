@@ -1,49 +1,60 @@
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
 package com.liferay.training.newsletter.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.service.base.NewsletterServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
-/**
- * The implementation of the newsletter remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.training.newsletter.service.NewsletterService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see NewsletterServiceBaseImpl
- */
 @Component(
-	property = {
+	property = { 
 		"json.web.service.context.name=newsletter",
-		"json.web.service.context.path=Newsletter"
-	},
-	service = AopService.class
-)
+		"json.web.service.context.path=Newsletter" },
+	service = AopService.class)
 public class NewsletterServiceImpl extends NewsletterServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.training.newsletter.service.NewsletterServiceUtil</code> to access the newsletter remote service.
-	 */
+	public Newsletter addNewsletter(long journalArticleId, int issueNumber, String title, String description, Date issueDate)
+			throws PortalException {
+
+		return newsletterLocalService.addNewsletter(journalArticleId, issueNumber, title, description, issueDate);
+	}
+	
+	public void deleteNewsletterByJournalArticleId(long journalArticleId) throws PortalException {
+		Newsletter newsletter = getNewsletterByJournalActicleId(journalArticleId);
+		newsletterLocalService.deleteNewsletter(newsletter.getNewsletterId());
+	}
+
+	public Newsletter getNewsletterByIssueNumber(int issueNumber) {
+
+		List<Newsletter> newsletters = newsletterLocalService.getNewsletters();
+		for (Newsletter newsletter : newsletters) {
+			if (newsletter.getIssueNumber() == issueNumber) {
+				return newsletter;
+			}
+		}
+
+		return null;
+	}
+	
+	public Newsletter getNewsletterByJournalActicleId(long journalArticleId) {
+
+		List<Newsletter> newsletters = newsletterLocalService.getNewsletters();
+		for (Newsletter newsletter : newsletters) {
+			if (newsletter.getJournalArticleId() == journalArticleId) {
+				return newsletter;
+			}
+		}
+
+		return null;
+	}
+	
+	public Newsletter updateNewsletter(long newsletterId, int issueNumber, String title, String description,
+			Date issueDate) throws PortalException {
+
+		return newsletterLocalService.updateNewsletter(newsletterId, issueNumber, title, description, issueDate);
+	}
 }

@@ -14,9 +14,15 @@
 
 package com.liferay.training.newsletter.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.training.newsletter.service.NewsletterServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.training.newsletter.service.NewsletterServiceUtil</code> service
+ * <code>NewsletterServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,102 @@ package com.liferay.training.newsletter.service.http;
  * @generated
  */
 public class NewsletterServiceSoap {
+
+	public static com.liferay.training.newsletter.model.NewsletterSoap
+			addNewsletter(
+				long journalArticleId, int issueNumber, String title,
+				String description, java.util.Date issueDate)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.newsletter.model.Newsletter returnValue =
+				NewsletterServiceUtil.addNewsletter(
+					journalArticleId, issueNumber, title, description,
+					issueDate);
+
+			return com.liferay.training.newsletter.model.NewsletterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteNewsletterByJournalArticleId(long journalArticleId)
+		throws RemoteException {
+
+		try {
+			NewsletterServiceUtil.deleteNewsletterByJournalArticleId(
+				journalArticleId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.newsletter.model.NewsletterSoap
+			getNewsletterByIssueNumber(int issueNumber)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.newsletter.model.Newsletter returnValue =
+				NewsletterServiceUtil.getNewsletterByIssueNumber(issueNumber);
+
+			return com.liferay.training.newsletter.model.NewsletterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.newsletter.model.NewsletterSoap
+			getNewsletterByJournalActicleId(long journalArticleId)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.newsletter.model.Newsletter returnValue =
+				NewsletterServiceUtil.getNewsletterByJournalActicleId(
+					journalArticleId);
+
+			return com.liferay.training.newsletter.model.NewsletterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.newsletter.model.NewsletterSoap
+			updateNewsletter(
+				long newsletterId, int issueNumber, String title,
+				String description, java.util.Date issueDate)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.newsletter.model.Newsletter returnValue =
+				NewsletterServiceUtil.updateNewsletter(
+					newsletterId, issueNumber, title, description, issueDate);
+
+			return com.liferay.training.newsletter.model.NewsletterSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NewsletterServiceSoap.class);
+
 }

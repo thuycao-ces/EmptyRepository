@@ -61,7 +61,7 @@ public class NewsletterCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{newsletterId=");
 		sb.append(newsletterId);
@@ -85,6 +85,8 @@ public class NewsletterCacheModel
 		sb.append(description);
 		sb.append(", issueDate=");
 		sb.append(issueDate);
+		sb.append(", journalArticleId=");
+		sb.append(journalArticleId);
 		sb.append("}");
 
 		return sb.toString();
@@ -143,6 +145,8 @@ public class NewsletterCacheModel
 			newsletterImpl.setIssueDate(new Date(issueDate));
 		}
 
+		newsletterImpl.setJournalArticleId(journalArticleId);
+
 		newsletterImpl.resetOriginalValues();
 
 		return newsletterImpl;
@@ -165,6 +169,8 @@ public class NewsletterCacheModel
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		issueDate = objectInput.readLong();
+
+		journalArticleId = objectInput.readLong();
 	}
 
 	@Override
@@ -204,6 +210,8 @@ public class NewsletterCacheModel
 		}
 
 		objectOutput.writeLong(issueDate);
+
+		objectOutput.writeLong(journalArticleId);
 	}
 
 	public long newsletterId;
@@ -217,5 +225,6 @@ public class NewsletterCacheModel
 	public String title;
 	public String description;
 	public long issueDate;
+	public long journalArticleId;
 
 }

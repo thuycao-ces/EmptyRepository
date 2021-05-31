@@ -52,6 +52,7 @@ public class NewsletterArticleWrapper
 		attributes.put("issueNumber", getIssueNumber());
 		attributes.put("title", getTitle());
 		attributes.put("content", getContent());
+		attributes.put("journalArticleId", getJournalArticleId());
 
 		return attributes;
 	}
@@ -117,6 +118,12 @@ public class NewsletterArticleWrapper
 		if (content != null) {
 			setContent(content);
 		}
+
+		Long journalArticleId = (Long)attributes.get("journalArticleId");
+
+		if (journalArticleId != null) {
+			setJournalArticleId(journalArticleId);
+		}
 	}
 
 	/**
@@ -177,6 +184,16 @@ public class NewsletterArticleWrapper
 	@Override
 	public Integer getIssueNumber() {
 		return model.getIssueNumber();
+	}
+
+	/**
+	 * Returns the journal article ID of this newsletter article.
+	 *
+	 * @return the journal article ID of this newsletter article
+	 */
+	@Override
+	public long getJournalArticleId() {
+		return model.getJournalArticleId();
 	}
 
 	/**
@@ -302,6 +319,16 @@ public class NewsletterArticleWrapper
 	@Override
 	public void setIssueNumber(Integer issueNumber) {
 		model.setIssueNumber(issueNumber);
+	}
+
+	/**
+	 * Sets the journal article ID of this newsletter article.
+	 *
+	 * @param journalArticleId the journal article ID of this newsletter article
+	 */
+	@Override
+	public void setJournalArticleId(long journalArticleId) {
+		model.setJournalArticleId(journalArticleId);
 	}
 
 	/**

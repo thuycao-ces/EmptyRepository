@@ -37,6 +37,15 @@ public class NewsletterLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.training.newsletter.model.Newsletter
+			addNewsletter(
+				long journalArticleId, int issueNumber, String title,
+				String description, java.util.Date issueDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addNewsletter(
+			journalArticleId, issueNumber, title, description, issueDate);
+	}
 
 	/**
 	 * Adds the newsletter to the database. Also notifies the appropriate model listeners.
@@ -219,6 +228,12 @@ public class NewsletterLocalServiceUtil {
 		return getService().getNewsletter(newsletterId);
 	}
 
+	public static java.util.List
+		<com.liferay.training.newsletter.model.Newsletter> getNewsletters() {
+
+		return getService().getNewsletters();
+	}
+
 	/**
 	 * Returns a range of all the newsletters.
 	 *
@@ -263,6 +278,16 @@ public class NewsletterLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.training.newsletter.model.Newsletter
+			updateNewsletter(
+				long newsletterId, int issueNumber, String title,
+				String description, java.util.Date issueDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsletter(
+			newsletterId, issueNumber, title, description, issueDate);
 	}
 
 	/**

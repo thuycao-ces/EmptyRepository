@@ -33,6 +33,17 @@ public class NewsletterArticleLocalServiceWrapper
 		_newsletterArticleLocalService = newsletterArticleLocalService;
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+			addNewsletterArticle(
+				long journalArticleId, int issueNumber, String title,
+				String content, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleLocalService.addNewsletterArticle(
+			journalArticleId, issueNumber, title, content, userId);
+	}
+
 	/**
 	 * Adds the newsletter article to the database. Also notifies the appropriate model listeners.
 	 *
@@ -237,6 +248,14 @@ public class NewsletterArticleLocalServiceWrapper
 			newsletterArticleId);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.training.newsletter.model.NewsletterArticle>
+			getNewsletterArticles() {
+
+		return _newsletterArticleLocalService.getNewsletterArticles();
+	}
+
 	/**
 	 * Returns a range of all the newsletter articles.
 	 *
@@ -285,6 +304,17 @@ public class NewsletterArticleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _newsletterArticleLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+			updateNewsletterArticle(
+				long newsletterArticleId, int issueNumber, String title,
+				String content)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleLocalService.updateNewsletterArticle(
+			newsletterArticleId, issueNumber, title, content);
 	}
 
 	/**

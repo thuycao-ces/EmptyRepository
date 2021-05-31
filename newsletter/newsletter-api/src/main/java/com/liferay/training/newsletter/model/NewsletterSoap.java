@@ -42,6 +42,7 @@ public class NewsletterSoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setIssueDate(model.getIssueDate());
+		soapModel.setJournalArticleId(model.getJournalArticleId());
 
 		return soapModel;
 	}
@@ -183,6 +184,14 @@ public class NewsletterSoap implements Serializable {
 		_issueDate = issueDate;
 	}
 
+	public long getJournalArticleId() {
+		return _journalArticleId;
+	}
+
+	public void setJournalArticleId(long journalArticleId) {
+		_journalArticleId = journalArticleId;
+	}
+
 	private long _newsletterId;
 	private long _groupId;
 	private long _companyId;
@@ -194,5 +203,6 @@ public class NewsletterSoap implements Serializable {
 	private String _title;
 	private String _description;
 	private Date _issueDate;
+	private long _journalArticleId;
 
 }

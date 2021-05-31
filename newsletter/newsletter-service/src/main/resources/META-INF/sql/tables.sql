@@ -9,7 +9,8 @@ create table NEWSLETTER_Newsletter (
 	issueNumber INTEGER,
 	title VARCHAR(75) null,
 	description VARCHAR(75) null,
-	issueDate DATE null
+	issueDate DATE null,
+	journalArticleId LONG
 );
 
 create table NEWSLETTER_NewsletterArticle (
@@ -22,5 +23,6 @@ create table NEWSLETTER_NewsletterArticle (
 	modifiedDate DATE null,
 	issueNumber INTEGER,
 	title VARCHAR(75) null,
-	content VARCHAR(75) null
+	content VARCHAR(75) null,
+	journalArticleId LONG
 );

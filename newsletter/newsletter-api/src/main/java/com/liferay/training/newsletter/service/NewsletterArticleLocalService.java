@@ -60,6 +60,10 @@ public interface NewsletterArticleLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NewsletterArticleLocalServiceUtil} to access the newsletter article local service. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterArticleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public NewsletterArticle addNewsletterArticle(
+			long journalArticleId, int issueNumber, String title,
+			String content, long userId)
+		throws PortalException;
 
 	/**
 	 * Adds the newsletter article to the database. Also notifies the appropriate model listeners.
@@ -194,6 +198,9 @@ public interface NewsletterArticleLocalService
 	public NewsletterArticle getNewsletterArticle(long newsletterArticleId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NewsletterArticle> getNewsletterArticles();
+
 	/**
 	 * Returns a range of all the newsletter articles.
 	 *
@@ -229,6 +236,11 @@ public interface NewsletterArticleLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public NewsletterArticle updateNewsletterArticle(
+			long newsletterArticleId, int issueNumber, String title,
+			String content)
 		throws PortalException;
 
 	/**

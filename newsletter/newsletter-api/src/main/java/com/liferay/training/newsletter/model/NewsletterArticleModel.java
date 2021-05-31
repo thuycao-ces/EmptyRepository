@@ -216,4 +216,18 @@ public interface NewsletterArticleModel
 	 */
 	public void setContent(String content);
 
+	/**
+	 * Returns the journal article ID of this newsletter article.
+	 *
+	 * @return the journal article ID of this newsletter article
+	 */
+	public long getJournalArticleId();
+
+	/**
+	 * Sets the journal article ID of this newsletter article.
+	 *
+	 * @param journalArticleId the journal article ID of this newsletter article
+	 */
+	public void setJournalArticleId(long journalArticleId);
+
 }

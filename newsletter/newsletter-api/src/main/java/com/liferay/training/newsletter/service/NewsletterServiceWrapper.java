@@ -30,6 +30,38 @@ public class NewsletterServiceWrapper
 		_newsletterService = newsletterService;
 	}
 
+	@Override
+	public com.liferay.training.newsletter.model.Newsletter addNewsletter(
+			long journalArticleId, int issueNumber, String title,
+			String description, java.util.Date issueDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterService.addNewsletter(
+			journalArticleId, issueNumber, title, description, issueDate);
+	}
+
+	@Override
+	public void deleteNewsletterByJournalArticleId(long journalArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_newsletterService.deleteNewsletterByJournalArticleId(journalArticleId);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Newsletter
+		getNewsletterByIssueNumber(int issueNumber) {
+
+		return _newsletterService.getNewsletterByIssueNumber(issueNumber);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Newsletter
+		getNewsletterByJournalActicleId(long journalArticleId) {
+
+		return _newsletterService.getNewsletterByJournalActicleId(
+			journalArticleId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -38,6 +70,16 @@ public class NewsletterServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _newsletterService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.Newsletter updateNewsletter(
+			long newsletterId, int issueNumber, String title,
+			String description, java.util.Date issueDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterService.updateNewsletter(
+			newsletterId, issueNumber, title, description, issueDate);
 	}
 
 	@Override

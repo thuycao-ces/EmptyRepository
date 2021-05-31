@@ -33,6 +33,7 @@ import com.liferay.training.newsletter.model.Newsletter;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -60,6 +61,10 @@ public interface NewsletterLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NewsletterLocalServiceUtil} to access the newsletter local service. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Newsletter addNewsletter(
+			long journalArticleId, int issueNumber, String title,
+			String description, Date issueDate)
+		throws PortalException;
 
 	/**
 	 * Adds the newsletter to the database. Also notifies the appropriate model listeners.
@@ -191,6 +196,9 @@ public interface NewsletterLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Newsletter getNewsletter(long newsletterId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Newsletter> getNewsletters();
+
 	/**
 	 * Returns a range of all the newsletters.
 	 *
@@ -226,6 +234,11 @@ public interface NewsletterLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public Newsletter updateNewsletter(
+			long newsletterId, int issueNumber, String title,
+			String description, Date issueDate)
 		throws PortalException;
 
 	/**

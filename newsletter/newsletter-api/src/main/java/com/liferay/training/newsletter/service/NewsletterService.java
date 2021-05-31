@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.training.newsletter.model.Newsletter;
+
+import java.util.Date;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +51,19 @@ public interface NewsletterService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NewsletterServiceUtil} to access the newsletter remote service. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Newsletter addNewsletter(
+			long journalArticleId, int issueNumber, String title,
+			String description, Date issueDate)
+		throws PortalException;
+
+	public void deleteNewsletterByJournalArticleId(long journalArticleId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Newsletter getNewsletterByIssueNumber(int issueNumber);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Newsletter getNewsletterByJournalActicleId(long journalArticleId);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +71,10 @@ public interface NewsletterService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public Newsletter updateNewsletter(
+			long newsletterId, int issueNumber, String title,
+			String description, Date issueDate)
+		throws PortalException;
 
 }

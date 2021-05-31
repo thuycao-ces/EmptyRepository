@@ -243,4 +243,18 @@ public interface NewsletterModel
 	 */
 	public void setIssueDate(Date issueDate);
 
+	/**
+	 * Returns the journal article ID of this newsletter.
+	 *
+	 * @return the journal article ID of this newsletter
+	 */
+	public long getJournalArticleId();
+
+	/**
+	 * Sets the journal article ID of this newsletter.
+	 *
+	 * @param journalArticleId the journal article ID of this newsletter
+	 */
+	public void setJournalArticleId(long journalArticleId);
+
 }
