@@ -1,4 +1,0 @@
-Bundle-Name: newsletter-listener-event
-Bundle-SymbolicName: com.liferay.training.listener.event
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.training.listener.event.constants

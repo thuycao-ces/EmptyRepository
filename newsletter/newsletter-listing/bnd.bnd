@@ -1,4 +1,0 @@
-Bundle-Name: newsletter-listing
-Bundle-SymbolicName: com.liferay.training.newsletter.listing
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.training.newsletter.listing.constants
