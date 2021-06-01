@@ -20,5 +20,4 @@ public class NewsLetterRoutesMapper extends DefaultFriendlyURLMapper {
 	}
 
 	private static final String _MAPPING = "newsletter";
-
 }

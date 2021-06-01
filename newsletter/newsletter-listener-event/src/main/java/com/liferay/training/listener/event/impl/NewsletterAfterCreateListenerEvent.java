@@ -46,6 +46,7 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 				} else if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTER_ARTICLES)) {
 
 					if (newsletterArticleLocalService.getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey) <= 0) {
+
 						_addNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimkey);
 					}
 				}

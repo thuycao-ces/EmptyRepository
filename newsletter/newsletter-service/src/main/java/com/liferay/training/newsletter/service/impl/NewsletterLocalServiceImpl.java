@@ -86,5 +86,4 @@ public class NewsletterLocalServiceImpl extends NewsletterLocalServiceBaseImpl {
 
 		throw new UnsupportedOperationException("Not supported.");
 	}
-
 }

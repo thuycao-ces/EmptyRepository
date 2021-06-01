@@ -62,5 +62,4 @@ public class NewsletterArticleMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	NewsletterArticleService newsletterArticleService;
-
 }
