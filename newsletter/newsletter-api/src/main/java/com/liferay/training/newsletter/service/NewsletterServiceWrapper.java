@@ -32,19 +32,12 @@ public class NewsletterServiceWrapper
 
 	@Override
 	public com.liferay.training.newsletter.model.Newsletter addNewsletter(
-			long journalArticleId, int issueNumber, String title,
+			long resourcePrimKey, int issueNumber, String title,
 			String description, java.util.Date issueDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _newsletterService.addNewsletter(
-			journalArticleId, issueNumber, title, description, issueDate);
-	}
-
-	@Override
-	public void deleteNewsletterByJournalArticleId(long journalArticleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_newsletterService.deleteNewsletterByJournalArticleId(journalArticleId);
+			resourcePrimKey, issueNumber, title, description, issueDate);
 	}
 
 	@Override
@@ -56,10 +49,10 @@ public class NewsletterServiceWrapper
 
 	@Override
 	public com.liferay.training.newsletter.model.Newsletter
-		getNewsletterByJournalActicleId(long journalArticleId) {
+		getNewsletterByResourcePrimKey(long resourcePrimKey) {
 
-		return _newsletterService.getNewsletterByJournalActicleId(
-			journalArticleId);
+		return _newsletterService.getNewsletterByResourcePrimKey(
+			resourcePrimKey);
 	}
 
 	/**
@@ -80,6 +73,13 @@ public class NewsletterServiceWrapper
 
 		return _newsletterService.updateNewsletter(
 			newsletterId, issueNumber, title, description, issueDate);
+	}
+
+	@Override
+	public void updateNewsletterStatus(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_newsletterService.updateNewsletterStatus(resourcePrimKey);
 	}
 
 	@Override

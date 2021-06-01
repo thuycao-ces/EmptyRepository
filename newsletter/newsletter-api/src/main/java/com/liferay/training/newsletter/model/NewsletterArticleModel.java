@@ -16,6 +16,7 @@ package com.liferay.training.newsletter.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -35,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface NewsletterArticleModel
-	extends BaseModel<NewsletterArticle>, ShardedModel {
+	extends BaseModel<NewsletterArticle>, ResourcedModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -217,17 +218,36 @@ public interface NewsletterArticleModel
 	public void setContent(String content);
 
 	/**
-	 * Returns the journal article ID of this newsletter article.
+	 * Returns the resource prim key of this newsletter article.
 	 *
-	 * @return the journal article ID of this newsletter article
+	 * @return the resource prim key of this newsletter article
 	 */
-	public long getJournalArticleId();
+	@Override
+	public long getResourcePrimKey();
 
 	/**
-	 * Sets the journal article ID of this newsletter article.
+	 * Sets the resource prim key of this newsletter article.
 	 *
-	 * @param journalArticleId the journal article ID of this newsletter article
+	 * @param resourcePrimKey the resource prim key of this newsletter article
 	 */
-	public void setJournalArticleId(long journalArticleId);
+	@Override
+	public void setResourcePrimKey(long resourcePrimKey);
+
+	@Override
+	public boolean isResourceMain();
+
+	/**
+	 * Returns the status of this newsletter article.
+	 *
+	 * @return the status of this newsletter article
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this newsletter article.
+	 *
+	 * @param status the status of this newsletter article
+	 */
+	public void setStatus(int status);
 
 }

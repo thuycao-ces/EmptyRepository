@@ -53,7 +53,7 @@ public class NewsletterServiceHttp {
 
 	public static com.liferay.training.newsletter.model.Newsletter
 			addNewsletter(
-				HttpPrincipal httpPrincipal, long journalArticleId,
+				HttpPrincipal httpPrincipal, long resourcePrimKey,
 				int issueNumber, String title, String description,
 				java.util.Date issueDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,7 +64,7 @@ public class NewsletterServiceHttp {
 				_addNewsletterParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, journalArticleId, issueNumber, title, description,
+				methodKey, resourcePrimKey, issueNumber, title, description,
 				issueDate);
 
 			Object returnObj = null;
@@ -95,18 +95,17 @@ public class NewsletterServiceHttp {
 		}
 	}
 
-	public static void deleteNewsletterByJournalArticleId(
-			HttpPrincipal httpPrincipal, long journalArticleId)
+	public static void updateNewsletterStatus(
+			HttpPrincipal httpPrincipal, long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				NewsletterServiceUtil.class,
-				"deleteNewsletterByJournalArticleId",
-				_deleteNewsletterByJournalArticleIdParameterTypes1);
+				NewsletterServiceUtil.class, "updateNewsletterStatus",
+				_updateNewsletterStatusParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, journalArticleId);
+				methodKey, resourcePrimKey);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -166,16 +165,16 @@ public class NewsletterServiceHttp {
 	}
 
 	public static com.liferay.training.newsletter.model.Newsletter
-		getNewsletterByJournalActicleId(
-			HttpPrincipal httpPrincipal, long journalArticleId) {
+		getNewsletterByResourcePrimKey(
+			HttpPrincipal httpPrincipal, long resourcePrimKey) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				NewsletterServiceUtil.class, "getNewsletterByJournalActicleId",
-				_getNewsletterByJournalActicleIdParameterTypes3);
+				NewsletterServiceUtil.class, "getNewsletterByResourcePrimKey",
+				_getNewsletterByResourcePrimKeyParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, journalArticleId);
+				methodKey, resourcePrimKey);
 
 			Object returnObj = null;
 
@@ -249,14 +248,12 @@ public class NewsletterServiceHttp {
 			long.class, int.class, String.class, String.class,
 			java.util.Date.class
 		};
-	private static final Class<?>[]
-		_deleteNewsletterByJournalArticleIdParameterTypes1 = new Class[] {
-			long.class
-		};
+	private static final Class<?>[] _updateNewsletterStatusParameterTypes1 =
+		new Class[] {long.class};
 	private static final Class<?>[] _getNewsletterByIssueNumberParameterTypes2 =
 		new Class[] {int.class};
 	private static final Class<?>[]
-		_getNewsletterByJournalActicleIdParameterTypes3 = new Class[] {
+		_getNewsletterByResourcePrimKeyParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateNewsletterParameterTypes4 =

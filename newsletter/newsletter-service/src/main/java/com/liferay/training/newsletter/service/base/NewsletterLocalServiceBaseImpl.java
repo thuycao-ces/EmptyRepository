@@ -295,6 +295,14 @@ public abstract class NewsletterLocalServiceBaseImpl
 		return newsletterPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	@Override
+	public List<? extends PersistedModel> getPersistedModel(
+			long resourcePrimKey)
+		throws PortalException {
+
+		return newsletterPersistence.findByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	 * Returns a range of all the newsletters.
 	 *

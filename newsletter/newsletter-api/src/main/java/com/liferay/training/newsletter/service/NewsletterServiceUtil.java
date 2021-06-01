@@ -39,18 +39,12 @@ public class NewsletterServiceUtil {
 	 */
 	public static com.liferay.training.newsletter.model.Newsletter
 			addNewsletter(
-				long journalArticleId, int issueNumber, String title,
+				long resourcePrimKey, int issueNumber, String title,
 				String description, java.util.Date issueDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addNewsletter(
-			journalArticleId, issueNumber, title, description, issueDate);
-	}
-
-	public static void deleteNewsletterByJournalArticleId(long journalArticleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().deleteNewsletterByJournalArticleId(journalArticleId);
+			resourcePrimKey, issueNumber, title, description, issueDate);
 	}
 
 	public static com.liferay.training.newsletter.model.Newsletter
@@ -60,9 +54,9 @@ public class NewsletterServiceUtil {
 	}
 
 	public static com.liferay.training.newsletter.model.Newsletter
-		getNewsletterByJournalActicleId(long journalArticleId) {
+		getNewsletterByResourcePrimKey(long resourcePrimKey) {
 
-		return getService().getNewsletterByJournalActicleId(journalArticleId);
+		return getService().getNewsletterByResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
@@ -82,6 +76,12 @@ public class NewsletterServiceUtil {
 
 		return getService().updateNewsletter(
 			newsletterId, issueNumber, title, description, issueDate);
+	}
+
+	public static void updateNewsletterStatus(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateNewsletterStatus(resourcePrimKey);
 	}
 
 	public static NewsletterService getService() {

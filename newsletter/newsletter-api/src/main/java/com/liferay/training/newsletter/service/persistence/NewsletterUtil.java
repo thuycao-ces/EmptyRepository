@@ -124,6 +124,181 @@ public class NewsletterUtil {
 	}
 
 	/**
+	 * Returns all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @return the matching newsletters
+	 */
+	public static List<Newsletter> findByResourcePrimKey(long resourcePrimKey) {
+		return getPersistence().findByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	 * Returns a range of all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NewsletterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param start the lower bound of the range of newsletters
+	 * @param end the upper bound of the range of newsletters (not inclusive)
+	 * @return the range of matching newsletters
+	 */
+	public static List<Newsletter> findByResourcePrimKey(
+		long resourcePrimKey, int start, int end) {
+
+		return getPersistence().findByResourcePrimKey(
+			resourcePrimKey, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NewsletterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param start the lower bound of the range of newsletters
+	 * @param end the upper bound of the range of newsletters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching newsletters
+	 */
+	public static List<Newsletter> findByResourcePrimKey(
+		long resourcePrimKey, int start, int end,
+		OrderByComparator<Newsletter> orderByComparator) {
+
+		return getPersistence().findByResourcePrimKey(
+			resourcePrimKey, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NewsletterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param start the lower bound of the range of newsletters
+	 * @param end the upper bound of the range of newsletters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching newsletters
+	 */
+	public static List<Newsletter> findByResourcePrimKey(
+		long resourcePrimKey, int start, int end,
+		OrderByComparator<Newsletter> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByResourcePrimKey(
+			resourcePrimKey, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching newsletter
+	 * @throws NoSuchNewsletterException if a matching newsletter could not be found
+	 */
+	public static Newsletter findByResourcePrimKey_First(
+			long resourcePrimKey,
+			OrderByComparator<Newsletter> orderByComparator)
+		throws com.liferay.training.newsletter.exception.
+			NoSuchNewsletterException {
+
+		return getPersistence().findByResourcePrimKey_First(
+			resourcePrimKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the first newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching newsletter, or <code>null</code> if a matching newsletter could not be found
+	 */
+	public static Newsletter fetchByResourcePrimKey_First(
+		long resourcePrimKey, OrderByComparator<Newsletter> orderByComparator) {
+
+		return getPersistence().fetchByResourcePrimKey_First(
+			resourcePrimKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching newsletter
+	 * @throws NoSuchNewsletterException if a matching newsletter could not be found
+	 */
+	public static Newsletter findByResourcePrimKey_Last(
+			long resourcePrimKey,
+			OrderByComparator<Newsletter> orderByComparator)
+		throws com.liferay.training.newsletter.exception.
+			NoSuchNewsletterException {
+
+		return getPersistence().findByResourcePrimKey_Last(
+			resourcePrimKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the last newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching newsletter, or <code>null</code> if a matching newsletter could not be found
+	 */
+	public static Newsletter fetchByResourcePrimKey_Last(
+		long resourcePrimKey, OrderByComparator<Newsletter> orderByComparator) {
+
+		return getPersistence().fetchByResourcePrimKey_Last(
+			resourcePrimKey, orderByComparator);
+	}
+
+	/**
+	 * Returns the newsletters before and after the current newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param newsletterId the primary key of the current newsletter
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next newsletter
+	 * @throws NoSuchNewsletterException if a newsletter with the primary key could not be found
+	 */
+	public static Newsletter[] findByResourcePrimKey_PrevAndNext(
+			long newsletterId, long resourcePrimKey,
+			OrderByComparator<Newsletter> orderByComparator)
+		throws com.liferay.training.newsletter.exception.
+			NoSuchNewsletterException {
+
+		return getPersistence().findByResourcePrimKey_PrevAndNext(
+			newsletterId, resourcePrimKey, orderByComparator);
+	}
+
+	/**
+	 * Removes all the newsletters where resourcePrimKey = &#63; from the database.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 */
+	public static void removeByResourcePrimKey(long resourcePrimKey) {
+		getPersistence().removeByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	 * Returns the number of newsletters where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @return the number of matching newsletters
+	 */
+	public static int countByResourcePrimKey(long resourcePrimKey) {
+		return getPersistence().countByResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
 	 * Caches the newsletter in the entity cache if it is enabled.
 	 *
 	 * @param newsletter the newsletter

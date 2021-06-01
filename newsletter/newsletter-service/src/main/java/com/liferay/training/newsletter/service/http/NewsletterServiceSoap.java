@@ -63,14 +63,14 @@ public class NewsletterServiceSoap {
 
 	public static com.liferay.training.newsletter.model.NewsletterSoap
 			addNewsletter(
-				long journalArticleId, int issueNumber, String title,
+				long resourcePrimKey, int issueNumber, String title,
 				String description, java.util.Date issueDate)
 		throws RemoteException {
 
 		try {
 			com.liferay.training.newsletter.model.Newsletter returnValue =
 				NewsletterServiceUtil.addNewsletter(
-					journalArticleId, issueNumber, title, description,
+					resourcePrimKey, issueNumber, title, description,
 					issueDate);
 
 			return com.liferay.training.newsletter.model.NewsletterSoap.
@@ -83,12 +83,11 @@ public class NewsletterServiceSoap {
 		}
 	}
 
-	public static void deleteNewsletterByJournalArticleId(long journalArticleId)
+	public static void updateNewsletterStatus(long resourcePrimKey)
 		throws RemoteException {
 
 		try {
-			NewsletterServiceUtil.deleteNewsletterByJournalArticleId(
-				journalArticleId);
+			NewsletterServiceUtil.updateNewsletterStatus(resourcePrimKey);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -116,13 +115,13 @@ public class NewsletterServiceSoap {
 	}
 
 	public static com.liferay.training.newsletter.model.NewsletterSoap
-			getNewsletterByJournalActicleId(long journalArticleId)
+			getNewsletterByResourcePrimKey(long resourcePrimKey)
 		throws RemoteException {
 
 		try {
 			com.liferay.training.newsletter.model.Newsletter returnValue =
-				NewsletterServiceUtil.getNewsletterByJournalActicleId(
-					journalArticleId);
+				NewsletterServiceUtil.getNewsletterByResourcePrimKey(
+					resourcePrimKey);
 
 			return com.liferay.training.newsletter.model.NewsletterSoap.
 				toSoapModel(returnValue);

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -86,6 +87,512 @@ public class NewsletterPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
+	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
+	private FinderPath _finderPathCountByResourcePrimKey;
+
+	/**
+	 * Returns all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @return the matching newsletters
+	 */
+	@Override
+	public List<Newsletter> findByResourcePrimKey(long resourcePrimKey) {
+		return findByResourcePrimKey(
+			resourcePrimKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NewsletterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param start the lower bound of the range of newsletters
+	 * @param end the upper bound of the range of newsletters (not inclusive)
+	 * @return the range of matching newsletters
+	 */
+	@Override
+	public List<Newsletter> findByResourcePrimKey(
+		long resourcePrimKey, int start, int end) {
+
+		return findByResourcePrimKey(resourcePrimKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NewsletterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param start the lower bound of the range of newsletters
+	 * @param end the upper bound of the range of newsletters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching newsletters
+	 */
+	@Override
+	public List<Newsletter> findByResourcePrimKey(
+		long resourcePrimKey, int start, int end,
+		OrderByComparator<Newsletter> orderByComparator) {
+
+		return findByResourcePrimKey(
+			resourcePrimKey, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the newsletters where resourcePrimKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NewsletterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param start the lower bound of the range of newsletters
+	 * @param end the upper bound of the range of newsletters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching newsletters
+	 */
+	@Override
+	public List<Newsletter> findByResourcePrimKey(
+		long resourcePrimKey, int start, int end,
+		OrderByComparator<Newsletter> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByResourcePrimKey;
+				finderArgs = new Object[] {resourcePrimKey};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByResourcePrimKey;
+			finderArgs = new Object[] {
+				resourcePrimKey, start, end, orderByComparator
+			};
+		}
+
+		List<Newsletter> list = null;
+
+		if (useFinderCache) {
+			list = (List<Newsletter>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Newsletter newsletter : list) {
+					if (resourcePrimKey != newsletter.getResourcePrimKey()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_NEWSLETTER_WHERE);
+
+			sb.append(_FINDER_COLUMN_RESOURCEPRIMKEY_RESOURCEPRIMKEY_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(NewsletterModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(resourcePrimKey);
+
+				list = (List<Newsletter>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching newsletter
+	 * @throws NoSuchNewsletterException if a matching newsletter could not be found
+	 */
+	@Override
+	public Newsletter findByResourcePrimKey_First(
+			long resourcePrimKey,
+			OrderByComparator<Newsletter> orderByComparator)
+		throws NoSuchNewsletterException {
+
+		Newsletter newsletter = fetchByResourcePrimKey_First(
+			resourcePrimKey, orderByComparator);
+
+		if (newsletter != null) {
+			return newsletter;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("resourcePrimKey=");
+		sb.append(resourcePrimKey);
+
+		sb.append("}");
+
+		throw new NoSuchNewsletterException(sb.toString());
+	}
+
+	/**
+	 * Returns the first newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching newsletter, or <code>null</code> if a matching newsletter could not be found
+	 */
+	@Override
+	public Newsletter fetchByResourcePrimKey_First(
+		long resourcePrimKey, OrderByComparator<Newsletter> orderByComparator) {
+
+		List<Newsletter> list = findByResourcePrimKey(
+			resourcePrimKey, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching newsletter
+	 * @throws NoSuchNewsletterException if a matching newsletter could not be found
+	 */
+	@Override
+	public Newsletter findByResourcePrimKey_Last(
+			long resourcePrimKey,
+			OrderByComparator<Newsletter> orderByComparator)
+		throws NoSuchNewsletterException {
+
+		Newsletter newsletter = fetchByResourcePrimKey_Last(
+			resourcePrimKey, orderByComparator);
+
+		if (newsletter != null) {
+			return newsletter;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("resourcePrimKey=");
+		sb.append(resourcePrimKey);
+
+		sb.append("}");
+
+		throw new NoSuchNewsletterException(sb.toString());
+	}
+
+	/**
+	 * Returns the last newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching newsletter, or <code>null</code> if a matching newsletter could not be found
+	 */
+	@Override
+	public Newsletter fetchByResourcePrimKey_Last(
+		long resourcePrimKey, OrderByComparator<Newsletter> orderByComparator) {
+
+		int count = countByResourcePrimKey(resourcePrimKey);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Newsletter> list = findByResourcePrimKey(
+			resourcePrimKey, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the newsletters before and after the current newsletter in the ordered set where resourcePrimKey = &#63;.
+	 *
+	 * @param newsletterId the primary key of the current newsletter
+	 * @param resourcePrimKey the resource prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next newsletter
+	 * @throws NoSuchNewsletterException if a newsletter with the primary key could not be found
+	 */
+	@Override
+	public Newsletter[] findByResourcePrimKey_PrevAndNext(
+			long newsletterId, long resourcePrimKey,
+			OrderByComparator<Newsletter> orderByComparator)
+		throws NoSuchNewsletterException {
+
+		Newsletter newsletter = findByPrimaryKey(newsletterId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Newsletter[] array = new NewsletterImpl[3];
+
+			array[0] = getByResourcePrimKey_PrevAndNext(
+				session, newsletter, resourcePrimKey, orderByComparator, true);
+
+			array[1] = newsletter;
+
+			array[2] = getByResourcePrimKey_PrevAndNext(
+				session, newsletter, resourcePrimKey, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Newsletter getByResourcePrimKey_PrevAndNext(
+		Session session, Newsletter newsletter, long resourcePrimKey,
+		OrderByComparator<Newsletter> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_NEWSLETTER_WHERE);
+
+		sb.append(_FINDER_COLUMN_RESOURCEPRIMKEY_RESOURCEPRIMKEY_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(NewsletterModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(resourcePrimKey);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(newsletter)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Newsletter> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the newsletters where resourcePrimKey = &#63; from the database.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 */
+	@Override
+	public void removeByResourcePrimKey(long resourcePrimKey) {
+		for (Newsletter newsletter :
+				findByResourcePrimKey(
+					resourcePrimKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(newsletter);
+		}
+	}
+
+	/**
+	 * Returns the number of newsletters where resourcePrimKey = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @return the number of matching newsletters
+	 */
+	@Override
+	public int countByResourcePrimKey(long resourcePrimKey) {
+		FinderPath finderPath = _finderPathCountByResourcePrimKey;
+
+		Object[] finderArgs = new Object[] {resourcePrimKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_NEWSLETTER_WHERE);
+
+			sb.append(_FINDER_COLUMN_RESOURCEPRIMKEY_RESOURCEPRIMKEY_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(resourcePrimKey);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_RESOURCEPRIMKEY_RESOURCEPRIMKEY_2 =
+			"newsletter.resourcePrimKey = ?";
 
 	public NewsletterPersistenceImpl() {
 		setModelClass(Newsletter.class);
@@ -356,10 +863,43 @@ public class NewsletterPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!_columnBitmaskEnabled) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else if (isNew) {
+			Object[] args = new Object[] {
+				newsletterModelImpl.getResourcePrimKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByResourcePrimKey, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByResourcePrimKey, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((newsletterModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByResourcePrimKey.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					newsletterModelImpl.getOriginalResourcePrimKey()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByResourcePrimKey, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByResourcePrimKey, args);
+
+				args = new Object[] {newsletterModelImpl.getResourcePrimKey()};
+
+				finderCache.removeResult(
+					_finderPathCountByResourcePrimKey, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByResourcePrimKey, args);
+			}
 		}
 
 		entityCache.putResult(
@@ -648,6 +1188,25 @@ public class NewsletterPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, NewsletterImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, NewsletterImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourcePrimKey",
+			new String[] {Long.class.getName()},
+			NewsletterModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK);
+
+		_finderPathCountByResourcePrimKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByResourcePrimKey",
+			new String[] {Long.class.getName()});
 	}
 
 	@Deactivate
@@ -701,13 +1260,22 @@ public class NewsletterPersistenceImpl
 	private static final String _SQL_SELECT_NEWSLETTER =
 		"SELECT newsletter FROM Newsletter newsletter";
 
+	private static final String _SQL_SELECT_NEWSLETTER_WHERE =
+		"SELECT newsletter FROM Newsletter newsletter WHERE ";
+
 	private static final String _SQL_COUNT_NEWSLETTER =
 		"SELECT COUNT(newsletter) FROM Newsletter newsletter";
+
+	private static final String _SQL_COUNT_NEWSLETTER_WHERE =
+		"SELECT COUNT(newsletter) FROM Newsletter newsletter WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "newsletter.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No Newsletter exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No Newsletter exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NewsletterPersistenceImpl.class);

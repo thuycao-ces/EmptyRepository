@@ -47,14 +47,6 @@ public class NewsletterArticleServiceUtil {
 			journalArticleId, issueNumber, title, content, userId);
 	}
 
-	public static com.liferay.training.newsletter.model.NewsletterArticle
-			deleteNewsletterArticleByJournalArticleId(long journalArticleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteNewsletterArticleByJournalArticleId(
-			journalArticleId);
-	}
-
 	public static java.util.List
 		<com.liferay.training.newsletter.model.NewsletterArticle>
 			getNewsletterArticleByIssueNumber(int issueNumber) {
@@ -63,9 +55,9 @@ public class NewsletterArticleServiceUtil {
 	}
 
 	public static com.liferay.training.newsletter.model.NewsletterArticle
-		getNewsletterByJournalActicleId(long journalArticleId) {
+		getNewsletterByResourcePrimKey(long resourcePrimkey) {
 
-		return getService().getNewsletterByJournalActicleId(journalArticleId);
+		return getService().getNewsletterByResourcePrimKey(resourcePrimkey);
 	}
 
 	/**
@@ -85,6 +77,12 @@ public class NewsletterArticleServiceUtil {
 
 		return getService().updateNewsletterArticle(
 			newsletterArticlesId, issueNumber, title, content);
+	}
+
+	public static void updateNewsletterArticleStatus(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateNewsletterArticleStatus(resourcePrimKey);
 	}
 
 	public static NewsletterArticleService getService() {

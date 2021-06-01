@@ -45,15 +45,6 @@ public class NewsletterArticleServiceWrapper
 	}
 
 	@Override
-	public com.liferay.training.newsletter.model.NewsletterArticle
-			deleteNewsletterArticleByJournalArticleId(long journalArticleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _newsletterArticleService.
-			deleteNewsletterArticleByJournalArticleId(journalArticleId);
-	}
-
-	@Override
 	public java.util.List
 		<com.liferay.training.newsletter.model.NewsletterArticle>
 			getNewsletterArticleByIssueNumber(int issueNumber) {
@@ -64,10 +55,10 @@ public class NewsletterArticleServiceWrapper
 
 	@Override
 	public com.liferay.training.newsletter.model.NewsletterArticle
-		getNewsletterByJournalActicleId(long journalArticleId) {
+		getNewsletterByResourcePrimKey(long resourcePrimkey) {
 
-		return _newsletterArticleService.getNewsletterByJournalActicleId(
-			journalArticleId);
+		return _newsletterArticleService.getNewsletterByResourcePrimKey(
+			resourcePrimkey);
 	}
 
 	/**
@@ -89,6 +80,14 @@ public class NewsletterArticleServiceWrapper
 
 		return _newsletterArticleService.updateNewsletterArticle(
 			newsletterArticlesId, issueNumber, title, content);
+	}
+
+	@Override
+	public void updateNewsletterArticleStatus(long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_newsletterArticleService.updateNewsletterArticleStatus(
+			resourcePrimKey);
 	}
 
 	@Override

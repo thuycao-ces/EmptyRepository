@@ -82,19 +82,12 @@ public class NewsletterArticleServiceSoap {
 		}
 	}
 
-	public static com.liferay.training.newsletter.model.NewsletterArticleSoap
-			deleteNewsletterArticleByJournalArticleId(long journalArticleId)
+	public static void updateNewsletterArticleStatus(long resourcePrimKey)
 		throws RemoteException {
 
 		try {
-			com.liferay.training.newsletter.model.NewsletterArticle
-				returnValue =
-					NewsletterArticleServiceUtil.
-						deleteNewsletterArticleByJournalArticleId(
-							journalArticleId);
-
-			return com.liferay.training.newsletter.model.NewsletterArticleSoap.
-				toSoapModel(returnValue);
+			NewsletterArticleServiceUtil.updateNewsletterArticleStatus(
+				resourcePrimKey);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -125,14 +118,14 @@ public class NewsletterArticleServiceSoap {
 	}
 
 	public static com.liferay.training.newsletter.model.NewsletterArticleSoap
-			getNewsletterByJournalActicleId(long journalArticleId)
+			getNewsletterByResourcePrimKey(long resourcePrimkey)
 		throws RemoteException {
 
 		try {
 			com.liferay.training.newsletter.model.NewsletterArticle
 				returnValue =
-					NewsletterArticleServiceUtil.
-						getNewsletterByJournalActicleId(journalArticleId);
+					NewsletterArticleServiceUtil.getNewsletterByResourcePrimKey(
+						resourcePrimkey);
 
 			return com.liferay.training.newsletter.model.NewsletterArticleSoap.
 				toSoapModel(returnValue);

@@ -53,7 +53,8 @@ public class NewsletterWrapper
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("issueDate", getIssueDate());
-		attributes.put("journalArticleId", getJournalArticleId());
+		attributes.put("resourcePrimKey", getResourcePrimKey());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -126,10 +127,16 @@ public class NewsletterWrapper
 			setIssueDate(issueDate);
 		}
 
-		Long journalArticleId = (Long)attributes.get("journalArticleId");
+		Long resourcePrimKey = (Long)attributes.get("resourcePrimKey");
 
-		if (journalArticleId != null) {
-			setJournalArticleId(journalArticleId);
+		if (resourcePrimKey != null) {
+			setResourcePrimKey(resourcePrimKey);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -194,16 +201,6 @@ public class NewsletterWrapper
 	}
 
 	/**
-	 * Returns the journal article ID of this newsletter.
-	 *
-	 * @return the journal article ID of this newsletter
-	 */
-	@Override
-	public long getJournalArticleId() {
-		return model.getJournalArticleId();
-	}
-
-	/**
 	 * Returns the modified date of this newsletter.
 	 *
 	 * @return the modified date of this newsletter
@@ -231,6 +228,26 @@ public class NewsletterWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the resource prim key of this newsletter.
+	 *
+	 * @return the resource prim key of this newsletter
+	 */
+	@Override
+	public long getResourcePrimKey() {
+		return model.getResourcePrimKey();
+	}
+
+	/**
+	 * Returns the status of this newsletter.
+	 *
+	 * @return the status of this newsletter
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -271,6 +288,11 @@ public class NewsletterWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	@Override
+	public boolean isResourceMain() {
+		return model.isResourceMain();
 	}
 
 	@Override
@@ -339,16 +361,6 @@ public class NewsletterWrapper
 	}
 
 	/**
-	 * Sets the journal article ID of this newsletter.
-	 *
-	 * @param journalArticleId the journal article ID of this newsletter
-	 */
-	@Override
-	public void setJournalArticleId(long journalArticleId) {
-		model.setJournalArticleId(journalArticleId);
-	}
-
-	/**
 	 * Sets the modified date of this newsletter.
 	 *
 	 * @param modifiedDate the modified date of this newsletter
@@ -376,6 +388,26 @@ public class NewsletterWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the resource prim key of this newsletter.
+	 *
+	 * @param resourcePrimKey the resource prim key of this newsletter
+	 */
+	@Override
+	public void setResourcePrimKey(long resourcePrimKey) {
+		model.setResourcePrimKey(resourcePrimKey);
+	}
+
+	/**
+	 * Sets the status of this newsletter.
+	 *
+	 * @param status the status of this newsletter
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

@@ -76,7 +76,8 @@ public class NewsletterModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"issueNumber", Types.INTEGER},
 		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"issueDate", Types.TIMESTAMP}, {"journalArticleId", Types.BIGINT}
+		{"issueDate", Types.TIMESTAMP}, {"resourcePrimKey", Types.BIGINT},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,11 +95,12 @@ public class NewsletterModelImpl
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("issueDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("journalArticleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NEWSLETTER_Newsletter (newsletterId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNumber INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,journalArticleId LONG)";
+		"create table NEWSLETTER_Newsletter (newsletterId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,issueNumber INTEGER,title VARCHAR(75) null,description VARCHAR(75) null,issueDate DATE null,resourcePrimKey LONG,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NEWSLETTER_Newsletter";
@@ -114,6 +116,10 @@ public class NewsletterModelImpl
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
+
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 1L;
+
+	public static final long NEWSLETTERID_COLUMN_BITMASK = 2L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -147,7 +153,8 @@ public class NewsletterModelImpl
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setIssueDate(soapModel.getIssueDate());
-		model.setJournalArticleId(soapModel.getJournalArticleId());
+		model.setResourcePrimKey(soapModel.getResourcePrimKey());
+		model.setStatus(soapModel.getStatus());
 
 		return model;
 	}
@@ -342,10 +349,13 @@ public class NewsletterModelImpl
 			"issueDate",
 			(BiConsumer<Newsletter, Date>)Newsletter::setIssueDate);
 		attributeGetterFunctions.put(
-			"journalArticleId", Newsletter::getJournalArticleId);
+			"resourcePrimKey", Newsletter::getResourcePrimKey);
 		attributeSetterBiConsumers.put(
-			"journalArticleId",
-			(BiConsumer<Newsletter, Long>)Newsletter::setJournalArticleId);
+			"resourcePrimKey",
+			(BiConsumer<Newsletter, Long>)Newsletter::setResourcePrimKey);
+		attributeGetterFunctions.put("status", Newsletter::getStatus);
+		attributeSetterBiConsumers.put(
+			"status", (BiConsumer<Newsletter, Integer>)Newsletter::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -513,13 +523,45 @@ public class NewsletterModelImpl
 
 	@JSON
 	@Override
-	public long getJournalArticleId() {
-		return _journalArticleId;
+	public long getResourcePrimKey() {
+		return _resourcePrimKey;
 	}
 
 	@Override
-	public void setJournalArticleId(long journalArticleId) {
-		_journalArticleId = journalArticleId;
+	public void setResourcePrimKey(long resourcePrimKey) {
+		_columnBitmask |= RESOURCEPRIMKEY_COLUMN_BITMASK;
+
+		if (!_setOriginalResourcePrimKey) {
+			_setOriginalResourcePrimKey = true;
+
+			_originalResourcePrimKey = _resourcePrimKey;
+		}
+
+		_resourcePrimKey = resourcePrimKey;
+	}
+
+	@Override
+	public boolean isResourceMain() {
+		return true;
+	}
+
+	public long getOriginalResourcePrimKey() {
+		return _originalResourcePrimKey;
+	}
+
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -565,7 +607,8 @@ public class NewsletterModelImpl
 		newsletterImpl.setTitle(getTitle());
 		newsletterImpl.setDescription(getDescription());
 		newsletterImpl.setIssueDate(getIssueDate());
-		newsletterImpl.setJournalArticleId(getJournalArticleId());
+		newsletterImpl.setResourcePrimKey(getResourcePrimKey());
+		newsletterImpl.setStatus(getStatus());
 
 		newsletterImpl.resetOriginalValues();
 
@@ -629,6 +672,13 @@ public class NewsletterModelImpl
 		NewsletterModelImpl newsletterModelImpl = this;
 
 		newsletterModelImpl._setModifiedDate = false;
+
+		newsletterModelImpl._originalResourcePrimKey =
+			newsletterModelImpl._resourcePrimKey;
+
+		newsletterModelImpl._setOriginalResourcePrimKey = false;
+
+		newsletterModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -696,7 +746,9 @@ public class NewsletterModelImpl
 			newsletterCacheModel.issueDate = Long.MIN_VALUE;
 		}
 
-		newsletterCacheModel.journalArticleId = getJournalArticleId();
+		newsletterCacheModel.resourcePrimKey = getResourcePrimKey();
+
+		newsletterCacheModel.status = getStatus();
 
 		return newsletterCacheModel;
 	}
@@ -786,7 +838,11 @@ public class NewsletterModelImpl
 	private String _title;
 	private String _description;
 	private Date _issueDate;
-	private long _journalArticleId;
+	private long _resourcePrimKey;
+	private long _originalResourcePrimKey;
+	private boolean _setOriginalResourcePrimKey;
+	private int _status;
+	private long _columnBitmask;
 	private Newsletter _escapedModel;
 
 }

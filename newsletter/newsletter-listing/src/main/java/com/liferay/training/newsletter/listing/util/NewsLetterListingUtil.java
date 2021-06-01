@@ -3,6 +3,7 @@ package com.liferay.training.newsletter.listing.util;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.model.NewsletterArticle;
 import com.liferay.training.newsletter.service.NewsletterArticleLocalService;
@@ -24,18 +25,18 @@ public class NewsLetterListingUtil {
 
 		Order order = OrderFactoryUtil.desc("issueDate");
 
-		DynamicQuery newsletterQuery = newsletterLocalService.dynamicQuery().addOrder(order);
+		DynamicQuery newsletterQuery = newsletterLocalService.dynamicQuery()
+				.add(RestrictionsFactoryUtil.eq("status", 0)).addOrder(order);
 
 		return newsletterLocalService.dynamicQuery(newsletterQuery);
-
 	}
 
 	public List<NewsletterArticle> getNewsletterArticles() {
 
-		DynamicQuery newsletterArticleQuery = newsletterArticleLocalService.dynamicQuery();
+		DynamicQuery newsletterArticleQuery = newsletterArticleLocalService.dynamicQuery()
+				.add(RestrictionsFactoryUtil.eq("status", 0));
 
 		return newsletterArticleLocalService.dynamicQuery(newsletterArticleQuery);
-
 	}
 
 	public Set<String> getYearsFromNewsLetter(List<Newsletter> newsletters) {
@@ -70,7 +71,6 @@ public class NewsLetterListingUtil {
 			if (!months.containsValue(value)) {
 				months.put(newsletter.getNewsletterId(), value);
 			}
-
 		}
 
 		return months;
@@ -87,7 +87,6 @@ public class NewsLetterListingUtil {
 			String month = formatDateTimes(patternMonth).format(newsletter.getIssueDate());
 
 			months.add(month);
-
 		}
 
 		return months;
@@ -105,7 +104,6 @@ public class NewsLetterListingUtil {
 		String[] array = string.split("_");
 
 		return array;
-
 	}
 
 	@Reference
@@ -113,5 +111,4 @@ public class NewsLetterListingUtil {
 
 	@Reference
 	NewsletterArticleLocalService newsletterArticleLocalService;
-
 }

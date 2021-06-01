@@ -52,18 +52,15 @@ public interface NewsletterService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link NewsletterServiceUtil} to access the newsletter remote service. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Newsletter addNewsletter(
-			long journalArticleId, int issueNumber, String title,
+			long resourcePrimKey, int issueNumber, String title,
 			String description, Date issueDate)
-		throws PortalException;
-
-	public void deleteNewsletterByJournalArticleId(long journalArticleId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Newsletter getNewsletterByIssueNumber(int issueNumber);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Newsletter getNewsletterByJournalActicleId(long journalArticleId);
+	public Newsletter getNewsletterByResourcePrimKey(long resourcePrimKey);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -75,6 +72,9 @@ public interface NewsletterService extends BaseService {
 	public Newsletter updateNewsletter(
 			long newsletterId, int issueNumber, String title,
 			String description, Date issueDate)
+		throws PortalException;
+
+	public void updateNewsletterStatus(long resourcePrimKey)
 		throws PortalException;
 
 }

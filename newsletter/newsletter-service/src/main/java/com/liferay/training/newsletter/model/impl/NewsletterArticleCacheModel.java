@@ -64,7 +64,7 @@ public class NewsletterArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{newsletterArticleId=");
 		sb.append(newsletterArticleId);
@@ -86,8 +86,10 @@ public class NewsletterArticleCacheModel
 		sb.append(title);
 		sb.append(", content=");
 		sb.append(content);
-		sb.append(", journalArticleId=");
-		sb.append(journalArticleId);
+		sb.append(", resourcePrimKey=");
+		sb.append(resourcePrimKey);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,7 +142,8 @@ public class NewsletterArticleCacheModel
 			newsletterArticleImpl.setContent(content);
 		}
 
-		newsletterArticleImpl.setJournalArticleId(journalArticleId);
+		newsletterArticleImpl.setResourcePrimKey(resourcePrimKey);
+		newsletterArticleImpl.setStatus(status);
 
 		newsletterArticleImpl.resetOriginalValues();
 
@@ -164,7 +167,9 @@ public class NewsletterArticleCacheModel
 		title = objectInput.readUTF();
 		content = objectInput.readUTF();
 
-		journalArticleId = objectInput.readLong();
+		resourcePrimKey = objectInput.readLong();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -203,7 +208,9 @@ public class NewsletterArticleCacheModel
 			objectOutput.writeUTF(content);
 		}
 
-		objectOutput.writeLong(journalArticleId);
+		objectOutput.writeLong(resourcePrimKey);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long newsletterArticleId;
@@ -216,6 +223,7 @@ public class NewsletterArticleCacheModel
 	public int issueNumber;
 	public String title;
 	public String content;
-	public long journalArticleId;
+	public long resourcePrimKey;
+	public int status;
 
 }

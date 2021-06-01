@@ -17,20 +17,21 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class)
 public class NewsletterServiceImpl extends NewsletterServiceBaseImpl {
 
-	public Newsletter addNewsletter(long journalArticleId, int issueNumber, String title, String description, Date issueDate)
+	public Newsletter addNewsletter(long resourcePrimKey, int issueNumber, String title, String description, Date issueDate)
 			throws PortalException {
 
-		return newsletterLocalService.addNewsletter(journalArticleId, issueNumber, title, description, issueDate);
+		return newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate);
 	}
 	
-	public void deleteNewsletterByJournalArticleId(long journalArticleId) throws PortalException {
-		Newsletter newsletter = getNewsletterByJournalActicleId(journalArticleId);
-		newsletterLocalService.deleteNewsletter(newsletter.getNewsletterId());
+	public void updateNewsletterStatus(long resourcePrimKey) throws PortalException {
+		
+		newsletterLocalService.updateNewsletterStatus(resourcePrimKey);
 	}
 
 	public Newsletter getNewsletterByIssueNumber(int issueNumber) {
 
 		List<Newsletter> newsletters = newsletterLocalService.getNewsletters();
+		
 		for (Newsletter newsletter : newsletters) {
 			if (newsletter.getIssueNumber() == issueNumber) {
 				return newsletter;
@@ -40,11 +41,12 @@ public class NewsletterServiceImpl extends NewsletterServiceBaseImpl {
 		return null;
 	}
 	
-	public Newsletter getNewsletterByJournalActicleId(long journalArticleId) {
+	public Newsletter getNewsletterByResourcePrimKey(long resourcePrimKey) {
 
 		List<Newsletter> newsletters = newsletterLocalService.getNewsletters();
+
 		for (Newsletter newsletter : newsletters) {
-			if (newsletter.getJournalArticleId() == journalArticleId) {
+			if (newsletter.getResourcePrimKey() == resourcePrimKey) {
 				return newsletter;
 			}
 		}

@@ -42,7 +42,8 @@ public class NewsletterSoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setIssueDate(model.getIssueDate());
-		soapModel.setJournalArticleId(model.getJournalArticleId());
+		soapModel.setResourcePrimKey(model.getResourcePrimKey());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -184,12 +185,20 @@ public class NewsletterSoap implements Serializable {
 		_issueDate = issueDate;
 	}
 
-	public long getJournalArticleId() {
-		return _journalArticleId;
+	public long getResourcePrimKey() {
+		return _resourcePrimKey;
 	}
 
-	public void setJournalArticleId(long journalArticleId) {
-		_journalArticleId = journalArticleId;
+	public void setResourcePrimKey(long resourcePrimKey) {
+		_resourcePrimKey = resourcePrimKey;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
 	}
 
 	private long _newsletterId;
@@ -203,6 +212,7 @@ public class NewsletterSoap implements Serializable {
 	private String _title;
 	private String _description;
 	private Date _issueDate;
-	private long _journalArticleId;
+	private long _resourcePrimKey;
+	private int _status;
 
 }

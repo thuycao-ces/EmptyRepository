@@ -23,14 +23,14 @@ public class NewsletterArticleServiceImpl extends NewsletterArticleServiceBaseIm
 		return newsletterArticleLocalService.addNewsletterArticle(journalArticleId, issueNumber, title, content, userId);
 	}
 	
-	public NewsletterArticle deleteNewsletterArticleByJournalArticleId(long journalArticleId) throws PortalException {
-		NewsletterArticle newsletterArticle = getNewsletterByJournalActicleId(journalArticleId);
-		return newsletterArticleLocalService.deleteNewsletterArticle(newsletterArticle.getNewsletterArticleId());
+	public void updateNewsletterArticleStatus(long resourcePrimKey) throws PortalException {
+
+		newsletterArticleLocalService.updateNewsletterArticleStatus(resourcePrimKey);
 	}
 
 	public List<NewsletterArticle> getNewsletterArticleByIssueNumber(int issueNumber) {
+		
 		List<NewsletterArticle> newsletterArticles = newsletterArticleLocalService.getNewsletterArticles();
-
 		List<NewsletterArticle> newList = new ArrayList<NewsletterArticle>();
 
 		for (NewsletterArticle item : newsletterArticles) {
@@ -41,11 +41,12 @@ public class NewsletterArticleServiceImpl extends NewsletterArticleServiceBaseIm
 		return newList;
 	}
 	
-	public NewsletterArticle getNewsletterByJournalActicleId(long journalArticleId) {
+	public NewsletterArticle getNewsletterByResourcePrimKey(long resourcePrimkey) {
 
 		List<NewsletterArticle> newsletterArticles = newsletterArticleLocalService.getNewsletterArticles();
+
 		for (NewsletterArticle newsletterArticle : newsletterArticles) {
-			if (newsletterArticle.getJournalArticleId() == journalArticleId) {
+			if (newsletterArticle.getResourcePrimKey() == resourcePrimkey) {
 				return newsletterArticle;
 			}
 		}

@@ -39,12 +39,12 @@ public class NewsletterLocalServiceUtil {
 	 */
 	public static com.liferay.training.newsletter.model.Newsletter
 			addNewsletter(
-				long journalArticleId, int issueNumber, String title,
+				long resourcePrimKey, int issueNumber, String title,
 				String description, java.util.Date issueDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addNewsletter(
-			journalArticleId, issueNumber, title, description, issueDate);
+			resourcePrimKey, issueNumber, title, description, issueDate);
 	}
 
 	/**
@@ -207,6 +207,13 @@ public class NewsletterLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static int getCountNewsletterByResourcePrimkey(
+		long resourcePrimkey) {
+
+		return getService().getCountNewsletterByResourcePrimkey(
+			resourcePrimkey);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -270,6 +277,14 @@ public class NewsletterLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List
+		<? extends com.liferay.portal.kernel.model.PersistedModel>
+				getPersistedModel(long resourcePrimKey)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getPersistedModel(resourcePrimKey);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -278,6 +293,13 @@ public class NewsletterLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.training.newsletter.model.Newsletter
+			updateNewsletter(long newsletterId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateNewsletter(newsletterId);
 	}
 
 	public static com.liferay.training.newsletter.model.Newsletter
@@ -301,6 +323,12 @@ public class NewsletterLocalServiceUtil {
 			com.liferay.training.newsletter.model.Newsletter newsletter) {
 
 		return getService().updateNewsletter(newsletter);
+	}
+
+	public static void updateNewsletterStatus(long resourcePrimkey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateNewsletterStatus(resourcePrimkey);
 	}
 
 	public static NewsletterLocalService getService() {

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,7 +54,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface NewsletterArticleLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, PersistedModelLocalService,
+			PersistedResourcedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -61,8 +63,8 @@ public interface NewsletterArticleLocalService
 	 * Never modify or reference this interface directly. Always use {@link NewsletterArticleLocalServiceUtil} to access the newsletter article local service. Add custom service methods to <code>com.liferay.training.newsletter.service.impl.NewsletterArticleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public NewsletterArticle addNewsletterArticle(
-			long journalArticleId, int issueNumber, String title,
-			String content, long userId)
+			long resourcePrimKey, int issueNumber, String title, String content,
+			long userId)
 		throws PortalException;
 
 	/**
@@ -185,6 +187,10 @@ public interface NewsletterArticleLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCountNewsletterArticlesByResourcePrimkey(
+		long resourcePrimkey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -230,12 +236,21 @@ public interface NewsletterArticleLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<? extends PersistedModel> getPersistedModel(
+			long resourcePrimKey)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public NewsletterArticle updateNewsletterArticle(long newsletterArticleId)
 		throws PortalException;
 
 	public NewsletterArticle updateNewsletterArticle(
@@ -252,5 +267,8 @@ public interface NewsletterArticleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public NewsletterArticle updateNewsletterArticle(
 		NewsletterArticle newsletterArticle);
+
+	public void updateNewsletterArticleStatus(long resourcePrimkey)
+		throws PortalException;
 
 }

@@ -1,73 +1,75 @@
 package com.liferay.training.listener.event.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.Field;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.training.listener.event.constants.ListenerCommandNames;
 import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.model.NewsletterArticle;
 import com.liferay.training.newsletter.service.NewsletterArticleService;
 import com.liferay.training.newsletter.service.NewsletterService;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(service = ModelListener.class)
-public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<JournalArticle>{
+public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<JournalArticle> {
 
 	@Override
 	public void onAfterUpdate(JournalArticle journalArticle) throws ModelListenerException {
 
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
 		DDMStructure structure;
+		Map<String, Object> attributes;
 
-		Fields fields = null;
+		long resourcePrimKey = journalArticle.getResourcePrimKey();
 
-		if (!journalArticle.getDDMStructureKey().equals(ListenerCommandNames.BASIC_WEB_CONTENT)) {
+		try {
 
-			try {
-				structure = ddmStructureLocalService.getStructure(journalArticle.getGroupId(),
-						classNameLocalService.getClassNameId(JournalArticle.class.getName()),
-						journalArticle.getStructureId());
+			if (!journalArticle.getDDMStructureKey().equals(ListenerCommandNames.BASIC_WEB_CONTENT)) {
 
-				fields = journalConverter.getDDMFields(structure, journalArticle.getContent());
-
-				for (Field field : fields) {
-					attributes.put(field.getName(), field.getValue());
-				}
+				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
+				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
 
 				if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTERS)) {
-					_updateNewsletters(attributes, journalArticle.getId());
-				} else if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTER_ARTICLES)) {
-					_updateNewsletterArticles(attributes, journalArticle.getUserId(), journalArticle.getId());
-				}
 
-			} catch (PortalException | ParseException e) {
-				e.printStackTrace();
+					_updateNewsletters(attributes, resourcePrimKey);
+
+					if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+						newsletterService.updateNewsletterStatus(resourcePrimKey);
+					}
+
+				} else if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTER_ARTICLES)) {
+
+					_updateNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimKey);
+
+					if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+						newsletterArticleService.updateNewsletterArticleStatus(resourcePrimKey);
+					}
+				}
+			}
+
+		} catch (PortalException e) {
+			if (_log.isInfoEnabled()) {
+				_log.info(e.getMessage());
 			}
 		}
 
 		super.onAfterUpdate(journalArticle);
 	}
 
-	private void _updateNewsletters(Map<String, Object> attributes, long journalArticleId) throws PortalException, ParseException {
+	private void _updateNewsletters(Map<String, Object> attributes, long resourcePrimKey) throws PortalException {
 
-		Newsletter newsletter = newsletterService.getNewsletterByJournalActicleId(journalArticleId);
+		Newsletter newsletter = newsletterService.getNewsletterByResourcePrimKey(resourcePrimKey);
 
 		int issueNumber = (int) attributes.get("issueNumber");
 
@@ -78,20 +80,23 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 		String stringIssueDate = (String) attributes.get("issueDate");
 
 		Date issueDate = null;
+
 		try {
 			issueDate = new SimpleDateFormat("yyyy-MM-dd").parse(stringIssueDate);
 		} catch (Exception e) {
-			e.printStackTrace();
+			
+			if(_log.isInfoEnabled()){
+				_log.info(e.getMessage());
+			}
 		}
 
 		newsletterService.updateNewsletter(newsletter.getNewsletterId(), issueNumber, title, description, issueDate);
-
 	}
 
-	private void _updateNewsletterArticles(Map<String, Object> attributes, long userId, long journalArticleId)
+	private void _updateNewsletterArticles(Map<String, Object> attributes, long userId, long resourcePrimKey)
 			throws PortalException {
-		
-		NewsletterArticle newsletterArticle = newsletterArticleService.getNewsletterByJournalActicleId(journalArticleId);
+
+		NewsletterArticle newsletterArticle = newsletterArticleService.getNewsletterByResourcePrimKey(resourcePrimKey);
 
 		int issueNumber = (int) attributes.get("issueNumber");
 
@@ -99,14 +104,9 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 
 		String content = (String) attributes.get("content");
 
-		newsletterArticleService.updateNewsletterArticle(newsletterArticle.getNewsletterArticleId(), issueNumber, title, content);
+		newsletterArticleService.updateNewsletterArticle(newsletterArticle.getNewsletterArticleId(), issueNumber, title,
+				content);
 	}
-
-	@Reference
-	ClassNameLocalService classNameLocalService;
-	
-	@Reference
-	JournalConverter journalConverter;
 
 	@Reference
 	NewsletterService newsletterService;
@@ -115,6 +115,7 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 	NewsletterArticleService newsletterArticleService;
 
 	@Reference
-	DDMStructureLocalService ddmStructureLocalService;
-
+	NewsletterListenerEventUtil newsletterListenerEventUtil;
+	
+	private static final Log _log = LogFactoryUtil.getLog(NewsletterAfterUpdateListenerEvent.class);
 }

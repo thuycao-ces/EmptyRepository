@@ -36,12 +36,12 @@ public class NewsletterArticleLocalServiceWrapper
 	@Override
 	public com.liferay.training.newsletter.model.NewsletterArticle
 			addNewsletterArticle(
-				long journalArticleId, int issueNumber, String title,
+				long resourcePrimKey, int issueNumber, String title,
 				String content, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _newsletterArticleLocalService.addNewsletterArticle(
-			journalArticleId, issueNumber, title, content, userId);
+			resourcePrimKey, issueNumber, title, content, userId);
 	}
 
 	/**
@@ -225,6 +225,14 @@ public class NewsletterArticleLocalServiceWrapper
 	}
 
 	@Override
+	public int getCountNewsletterArticlesByResourcePrimkey(
+		long resourcePrimkey) {
+
+		return _newsletterArticleLocalService.
+			getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -295,6 +303,16 @@ public class NewsletterArticleLocalServiceWrapper
 		return _newsletterArticleLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List
+		<? extends com.liferay.portal.kernel.model.PersistedModel>
+				getPersistedModel(long resourcePrimKey)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleLocalService.getPersistedModel(
+			resourcePrimKey);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -304,6 +322,15 @@ public class NewsletterArticleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _newsletterArticleLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.training.newsletter.model.NewsletterArticle
+			updateNewsletterArticle(long newsletterArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _newsletterArticleLocalService.updateNewsletterArticle(
+			newsletterArticleId);
 	}
 
 	@Override
@@ -331,6 +358,14 @@ public class NewsletterArticleLocalServiceWrapper
 
 		return _newsletterArticleLocalService.updateNewsletterArticle(
 			newsletterArticle);
+	}
+
+	@Override
+	public void updateNewsletterArticleStatus(long resourcePrimkey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_newsletterArticleLocalService.updateNewsletterArticleStatus(
+			resourcePrimkey);
 	}
 
 	@Override

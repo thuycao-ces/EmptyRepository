@@ -95,24 +95,21 @@ public class NewsletterArticleServiceHttp {
 		}
 	}
 
-	public static com.liferay.training.newsletter.model.NewsletterArticle
-			deleteNewsletterArticleByJournalArticleId(
-				HttpPrincipal httpPrincipal, long journalArticleId)
+	public static void updateNewsletterArticleStatus(
+			HttpPrincipal httpPrincipal, long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				NewsletterArticleServiceUtil.class,
-				"deleteNewsletterArticleByJournalArticleId",
-				_deleteNewsletterArticleByJournalArticleIdParameterTypes1);
+				"updateNewsletterArticleStatus",
+				_updateNewsletterArticleStatusParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, journalArticleId);
-
-			Object returnObj = null;
+				methodKey, resourcePrimKey);
 
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
 				if (exception instanceof
@@ -125,9 +122,6 @@ public class NewsletterArticleServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
-
-			return (com.liferay.training.newsletter.model.NewsletterArticle)
-				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -176,17 +170,17 @@ public class NewsletterArticleServiceHttp {
 	}
 
 	public static com.liferay.training.newsletter.model.NewsletterArticle
-		getNewsletterByJournalActicleId(
-			HttpPrincipal httpPrincipal, long journalArticleId) {
+		getNewsletterByResourcePrimKey(
+			HttpPrincipal httpPrincipal, long resourcePrimkey) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				NewsletterArticleServiceUtil.class,
-				"getNewsletterByJournalActicleId",
-				_getNewsletterByJournalActicleIdParameterTypes3);
+				"getNewsletterByResourcePrimKey",
+				_getNewsletterByResourcePrimKeyParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, journalArticleId);
+				methodKey, resourcePrimkey);
 
 			Object returnObj = null;
 
@@ -261,14 +255,15 @@ public class NewsletterArticleServiceHttp {
 			long.class, int.class, String.class, String.class, long.class
 		};
 	private static final Class<?>[]
-		_deleteNewsletterArticleByJournalArticleIdParameterTypes1 =
-			new Class[] {long.class};
+		_updateNewsletterArticleStatusParameterTypes1 = new Class[] {
+			long.class
+		};
 	private static final Class<?>[]
 		_getNewsletterArticleByIssueNumberParameterTypes2 = new Class[] {
 			int.class
 		};
 	private static final Class<?>[]
-		_getNewsletterByJournalActicleIdParameterTypes3 = new Class[] {
+		_getNewsletterByResourcePrimKeyParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateNewsletterArticleParameterTypes4 =

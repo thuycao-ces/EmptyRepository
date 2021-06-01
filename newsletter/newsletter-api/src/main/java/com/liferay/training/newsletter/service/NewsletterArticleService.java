@@ -56,17 +56,13 @@ public interface NewsletterArticleService extends BaseService {
 			String content, long userId)
 		throws PortalException;
 
-	public NewsletterArticle deleteNewsletterArticleByJournalArticleId(
-			long journalArticleId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<NewsletterArticle> getNewsletterArticleByIssueNumber(
 		int issueNumber);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public NewsletterArticle getNewsletterByJournalActicleId(
-		long journalArticleId);
+	public NewsletterArticle getNewsletterByResourcePrimKey(
+		long resourcePrimkey);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -78,6 +74,9 @@ public interface NewsletterArticleService extends BaseService {
 	public NewsletterArticle updateNewsletterArticle(
 			long newsletterArticlesId, int issueNumber, String title,
 			String content)
+		throws PortalException;
+
+	public void updateNewsletterArticleStatus(long resourcePrimKey)
 		throws PortalException;
 
 }
