@@ -14,6 +14,7 @@ import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.model.NewsletterArticle;
 import com.liferay.training.newsletter.service.NewsletterArticleService;
 import com.liferay.training.newsletter.service.NewsletterService;
+import com.liferay.training.newsletter.utils.ReadDataWithStructure;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,8 +38,8 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 
 			if (!journalArticle.getDDMStructureKey().equals(ListenerCommandNames.BASIC_WEB_CONTENT)) {
 
-				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
-				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
+				structure = newsletterListenerEvent.getDDMStructure(journalArticle);
+				attributes = newsletterListenerEvent.getFileds(structure, journalArticle);
 
 				if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTERS)) {
 
@@ -115,7 +116,7 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 	NewsletterArticleService newsletterArticleService;
 
 	@Reference
-	NewsletterListenerEventUtil newsletterListenerEventUtil;
+	ReadDataWithStructure newsletterListenerEvent;
 	
 	private static final Log _log = LogFactoryUtil.getLog(NewsletterAfterUpdateListenerEvent.class);
 }

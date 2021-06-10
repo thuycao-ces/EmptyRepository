@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.training.listener.event.constants.ListenerCommandNames;
 import com.liferay.training.newsletter.service.NewsletterArticleLocalService;
 import com.liferay.training.newsletter.service.NewsletterLocalService;
+import com.liferay.training.newsletter.utils.ReadDataWithStructure;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,20 +35,20 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 
 			if (!journalArticle.getDDMStructureKey().equals(ListenerCommandNames.BASIC_WEB_CONTENT)) {
 
-				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
-				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
+				structure = readDataWithStructure.getDDMStructure(journalArticle);
+				attributes = readDataWithStructure.getFileds(structure, journalArticle);
 
 				if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTERS)) {
 
 					if (newsletterLocalService.getCountNewsletterByResourcePrimkey(resourcePrimkey) <= 0) {
 
-						_addNewsletters(attributes, resourcePrimkey);
+						_addNewsletters(attributes,journalArticle.getGroupId(), resourcePrimkey);
 					}
 				} else if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTER_ARTICLES)) {
 
 					if (newsletterArticleLocalService.getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey) <= 0) {
 
-						_addNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimkey);
+						_addNewsletterArticles(attributes, journalArticle.getUserId(), journalArticle.getGroupId(), resourcePrimkey);
 					}
 				}
 			}
@@ -61,7 +62,7 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 		super.onAfterCreate(journalArticle);
 	}
 
-	private void _addNewsletters(Map<String, Object> attributes, long resourcePrimKey) throws PortalException {
+	private void _addNewsletters(Map<String, Object> attributes, long groupId, long resourcePrimKey) throws PortalException {
 
 		int issueNumber = (int) attributes.get("issueNumber");
 
@@ -82,10 +83,10 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 			}
 		}
 
-		newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate);
+		newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate, groupId);
 	}
 
-	private void _addNewsletterArticles(Map<String, Object> attributes, long userId, long resourcePrimKey)
+	private void _addNewsletterArticles(Map<String, Object> attributes, long userId, long groupId, long resourcePrimKey)
 			throws PortalException {
 
 		int issueNumber = (int) attributes.get("issueNumber");
@@ -94,7 +95,7 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 
 		String content = (String) attributes.get("content");
 
-		newsletterArticleLocalService.addNewsletterArticle(resourcePrimKey, issueNumber, title, content, userId);
+		newsletterArticleLocalService.addNewsletterArticle(resourcePrimKey, issueNumber, title, content, userId, groupId);
 	}
 
 	@Reference
@@ -104,7 +105,7 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 	NewsletterArticleLocalService newsletterArticleLocalService;
 
 	@Reference
-	NewsletterListenerEventUtil newsletterListenerEventUtil;
+	ReadDataWithStructure readDataWithStructure;
 	
 	private static final Log _log = LogFactoryUtil.getLog(NewsletterAfterCreateListenerEvent.class);
 }
