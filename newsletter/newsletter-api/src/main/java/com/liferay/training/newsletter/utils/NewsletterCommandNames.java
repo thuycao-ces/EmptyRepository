@@ -1,6 +1,6 @@
-package com.liferay.training.listener.event.constants;
+package com.liferay.training.newsletter.utils;
 
-public class ListenerCommandNames {
+public class NewsletterCommandNames {
 
 	public static final String BASIC_WEB_CONTENT = "BASIC-WEB-CONTENT";
 

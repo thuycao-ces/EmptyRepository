@@ -9,11 +9,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.training.listener.event.constants.ListenerCommandNames;
 import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.model.NewsletterArticle;
 import com.liferay.training.newsletter.service.NewsletterArticleService;
 import com.liferay.training.newsletter.service.NewsletterService;
+import com.liferay.training.newsletter.utils.NewsletterCommandNames;
+import com.liferay.training.newsletter.utils.ReadDataWithStructureUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,26 +36,31 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 
 		try {
 
-			if (!journalArticle.getDDMStructureKey().equals(ListenerCommandNames.BASIC_WEB_CONTENT)) {
+			if (!journalArticle.getDDMStructureKey().equals(NewsletterCommandNames.BASIC_WEB_CONTENT)) {
 
 				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
 				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
 
-				if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTERS)) {
+				String currentNameValue = structure.getNameCurrentValue();
+				switch (currentNameValue) {
+					case NewsletterCommandNames.NEWSLETTERS:
 
-					_updateNewsletters(attributes, resourcePrimKey);
+						_updateNewsletters(attributes, resourcePrimKey);
 
-					if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-						newsletterService.updateNewsletterStatus(resourcePrimKey);
-					}
+						if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+							newsletterService.updateNewsletterStatus(resourcePrimKey);
+						}
+						break;
+					case NewsletterCommandNames.NEWSLETTER_ARTICLES:
 
-				} else if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTER_ARTICLES)) {
+						_updateNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimKey);
 
-					_updateNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimKey);
+						if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+							newsletterArticleService.updateNewsletterArticleStatus(resourcePrimKey);
+						}
+						break;
+					default: break;
 
-					if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-						newsletterArticleService.updateNewsletterArticleStatus(resourcePrimKey);
-					}
 				}
 			}
 
@@ -84,8 +90,8 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 		try {
 			issueDate = new SimpleDateFormat("yyyy-MM-dd").parse(stringIssueDate);
 		} catch (Exception e) {
-			
-			if(_log.isInfoEnabled()){
+
+			if (_log.isInfoEnabled()) {
 				_log.info(e.getMessage());
 			}
 		}
@@ -115,7 +121,7 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 	NewsletterArticleService newsletterArticleService;
 
 	@Reference
-	NewsletterListenerEventUtil newsletterListenerEventUtil;
-	
+	ReadDataWithStructureUtil newsletterListenerEventUtil;
+
 	private static final Log _log = LogFactoryUtil.getLog(NewsletterAfterUpdateListenerEvent.class);
 }

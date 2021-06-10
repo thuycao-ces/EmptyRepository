@@ -8,9 +8,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.training.listener.event.constants.ListenerCommandNames;
 import com.liferay.training.newsletter.service.NewsletterArticleLocalService;
 import com.liferay.training.newsletter.service.NewsletterLocalService;
+import com.liferay.training.newsletter.utils.NewsletterCommandNames;
+import com.liferay.training.newsletter.utils.ReadDataWithStructureUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,28 +33,35 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 
 		try {
 
-			if (!journalArticle.getDDMStructureKey().equals(ListenerCommandNames.BASIC_WEB_CONTENT)) {
+			if (!journalArticle.getDDMStructureKey().equals(NewsletterCommandNames.BASIC_WEB_CONTENT)) {
 
 				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
 				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
 
-				if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTERS)) {
+				String currentNameValue = structure.getNameCurrentValue();
+				switch (currentNameValue) {
+					case NewsletterCommandNames.NEWSLETTERS:
 
-					if (newsletterLocalService.getCountNewsletterByResourcePrimkey(resourcePrimkey) <= 0) {
+						if (newsletterLocalService.getCountNewsletterByResourcePrimkey(resourcePrimkey) <= 0) {
 
-						_addNewsletters(attributes, resourcePrimkey);
-					}
-				} else if (structure.getNameCurrentValue().equals(ListenerCommandNames.NEWSLETTER_ARTICLES)) {
+							_addNewsletters(attributes, journalArticle.getGroupId(), resourcePrimkey);
+						}
+						break;
+					case NewsletterCommandNames.NEWSLETTER_ARTICLES:
 
-					if (newsletterArticleLocalService.getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey) <= 0) {
+						if (newsletterArticleLocalService
+								.getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey) <= 0) {
 
-						_addNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimkey);
-					}
+							_addNewsletterArticles(attributes, journalArticle.getUserId(), journalArticle.getGroupId(),
+									resourcePrimkey);
+						}
+						break;
+					default: break;
 				}
 			}
 		} catch (PortalException e) {
-			
-			if(_log.isInfoEnabled()){
+
+			if (_log.isInfoEnabled()) {
 				_log.info(e.getMessage());
 			}
 		}
@@ -61,7 +69,8 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 		super.onAfterCreate(journalArticle);
 	}
 
-	private void _addNewsletters(Map<String, Object> attributes, long resourcePrimKey) throws PortalException {
+	private void _addNewsletters(Map<String, Object> attributes, long groupId, long resourcePrimKey)
+			throws PortalException {
 
 		int issueNumber = (int) attributes.get("issueNumber");
 
@@ -82,10 +91,10 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 			}
 		}
 
-		newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate);
+		newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate, groupId);
 	}
 
-	private void _addNewsletterArticles(Map<String, Object> attributes, long userId, long resourcePrimKey)
+	private void _addNewsletterArticles(Map<String, Object> attributes, long userId, long groupId, long resourcePrimKey)
 			throws PortalException {
 
 		int issueNumber = (int) attributes.get("issueNumber");
@@ -94,7 +103,8 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 
 		String content = (String) attributes.get("content");
 
-		newsletterArticleLocalService.addNewsletterArticle(resourcePrimKey, issueNumber, title, content, userId);
+		newsletterArticleLocalService.addNewsletterArticle(resourcePrimKey, issueNumber, title, content, userId,
+				groupId);
 	}
 
 	@Reference
@@ -104,7 +114,7 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 	NewsletterArticleLocalService newsletterArticleLocalService;
 
 	@Reference
-	NewsletterListenerEventUtil newsletterListenerEventUtil;
-	
+	ReadDataWithStructureUtil newsletterListenerEventUtil;
+
 	private static final Log _log = LogFactoryUtil.getLog(NewsletterAfterCreateListenerEvent.class);
 }
