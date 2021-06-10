@@ -41,21 +41,25 @@ public class NewsletterAfterUpdateListenerEvent extends BaseModelListener<Journa
 				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
 				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
 
-				if (structure.getNameCurrentValue().equals(NewsletterCommandNames.NEWSLETTERS)) {
+				String currentNameValue = structure.getNameCurrentValue();
+				switch (currentNameValue) {
+					case NewsletterCommandNames.NEWSLETTERS:
 
-					_updateNewsletters(attributes, resourcePrimKey);
+						_updateNewsletters(attributes, resourcePrimKey);
 
-					if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-						newsletterService.updateNewsletterStatus(resourcePrimKey);
-					}
+						if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+							newsletterService.updateNewsletterStatus(resourcePrimKey);
+						}
+						break;
+					case NewsletterCommandNames.NEWSLETTER_ARTICLES:
 
-				} else if (structure.getNameCurrentValue().equals(NewsletterCommandNames.NEWSLETTER_ARTICLES)) {
+						_updateNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimKey);
 
-					_updateNewsletterArticles(attributes, journalArticle.getUserId(), resourcePrimKey);
-
-					if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-						newsletterArticleService.updateNewsletterArticleStatus(resourcePrimKey);
-					}
+						if (journalArticle.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+							newsletterArticleService.updateNewsletterArticleStatus(resourcePrimKey);
+						}
+						break;
+					default: break;
 				}
 			}
 

@@ -38,20 +38,25 @@ public class NewsletterAfterCreateListenerEvent extends BaseModelListener<Journa
 				structure = newsletterListenerEventUtil.getDDMStructure(journalArticle);
 				attributes = newsletterListenerEventUtil.getFileds(structure, journalArticle);
 
-				if (structure.getNameCurrentValue().equals(NewsletterCommandNames.NEWSLETTERS)) {
+				String currentNameValue = structure.getNameCurrentValue();
+				switch (currentNameValue) {
+					case NewsletterCommandNames.NEWSLETTERS:
 
-					if (newsletterLocalService.getCountNewsletterByResourcePrimkey(resourcePrimkey) <= 0) {
+						if (newsletterLocalService.getCountNewsletterByResourcePrimkey(resourcePrimkey) <= 0) {
 
-						_addNewsletters(attributes, journalArticle.getGroupId(), resourcePrimkey);
-					}
-				} else if (structure.getNameCurrentValue().equals(NewsletterCommandNames.NEWSLETTER_ARTICLES)) {
+							_addNewsletters(attributes, journalArticle.getGroupId(), resourcePrimkey);
+						}
+						break;
+					case NewsletterCommandNames.NEWSLETTER_ARTICLES:
 
-					if (newsletterArticleLocalService
-							.getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey) <= 0) {
+						if (newsletterArticleLocalService
+								.getCountNewsletterArticlesByResourcePrimkey(resourcePrimkey) <= 0) {
 
-						_addNewsletterArticles(attributes, journalArticle.getUserId(), journalArticle.getGroupId(),
-								resourcePrimkey);
-					}
+							_addNewsletterArticles(attributes, journalArticle.getUserId(), journalArticle.getGroupId(),
+									resourcePrimkey);
+						}
+						break;
+					default: break;
 				}
 			}
 		} catch (PortalException e) {
