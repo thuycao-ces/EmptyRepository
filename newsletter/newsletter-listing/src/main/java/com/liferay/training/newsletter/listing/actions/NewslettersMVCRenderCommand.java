@@ -21,8 +21,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + NewsletterListingPortletKeys.NEWSLETTERLISTING,
 		"mvc.command.name=/",
 		"mvc.command.name=" + MVCCommandNames.VIEW_NEWSLETTERS }, 
-	service = MVCRenderCommand.class)
-public class NewslettersMVCRenderCommand implements MVCRenderCommand{
+	service = MVCRenderCommand.class
+)
+public class NewslettersMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
@@ -40,6 +41,7 @@ public class NewslettersMVCRenderCommand implements MVCRenderCommand{
 		renderRequest.setAttribute("newsletters", newsletters);
 		renderRequest.setAttribute("articles", newsLetterListingUtil.getNewsletterArticles());
 		renderRequest.setAttribute("newsLetterListingUtil", newsLetterListingUtil);
+
 		return "/view.jsp";
 	}
 

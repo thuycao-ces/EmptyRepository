@@ -1,4 +1,4 @@
-package com.liferay.training.listener.event.impl;
+package com.liferay.training.newsletter.utils;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -16,10 +16,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(
-	service = NewsletterListenerEventUtil.class, 
+	service = ReadDataWithStructureUtil.class,
 	immediate = true
 )
-public class NewsletterListenerEventUtil {
+public class ReadDataWithStructureUtil {
 
 	public DDMStructure getDDMStructure(JournalArticle journalArticle) throws PortalException {
 
@@ -28,7 +28,7 @@ public class NewsletterListenerEventUtil {
 
 		return structure;
 	}
-	
+
 	public Map<String, Object> getFileds(DDMStructure ddmStructure, JournalArticle journalArticle)
 			throws PortalException {
 
