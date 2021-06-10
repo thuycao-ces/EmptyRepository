@@ -1,5 +1,7 @@
 package com.liferay.training.newsletter.listing.actions;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,8 +21,6 @@ import com.liferay.training.newsletter.listing.constants.NewsletterListingPortle
 import com.liferay.training.newsletter.listing.util.NewsLetterListingUtil;
 import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.model.NewsletterArticle;
-import com.liferay.training.newsletter.service.NewsletterArticleLocalService;
-import com.liferay.training.newsletter.service.NewsletterLocalService;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -73,64 +73,47 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		searchContext.setStart(0);
 		searchContext.setEnd(10);
 
-		Indexer indexerForNewsletter = IndexerRegistryUtil.getIndexer(Newsletter.class);
+		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
-		Indexer indexerForNewsletterArticle = IndexerRegistryUtil.getIndexer(NewsletterArticle.class);
+		Hits hits = indexer.search(searchContext);
 
-		Hits hitsForNewsletter = indexerForNewsletter.search(searchContext);
-
-		Hits hitsForNewsletterArticle = indexerForNewsletterArticle.search(searchContext);
-
-		Set<Long> resourcePrimKeys = new LinkedHashSet<Long>();
+		Set<Long> journalArticlesResourcePrimKeys = new LinkedHashSet<Long>();
 
 		if (!searchContext.getKeywords().isEmpty()) {
 
-			for (int i = 0; i < hitsForNewsletter.getDocs().length; i++) {
-
-				Document doc = hitsForNewsletter.doc(i);
-
-				long resourcePrimKey = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-				Newsletter newsletter = null;
-
-				newsletter = newsletterLocalService.getByResourcePrimKey(resourcePrimKey);
-
-				resourcePrimKeys.add(newsletter.getResourcePrimKey());
-
-			}
-			for (int i = 0; i < hitsForNewsletterArticle.getDocs().length; i++) {
-
-				Document doc = hitsForNewsletterArticle.doc(i);
+			for (int i = 0; i < hits.getDocs().length; i++) {
+				Document doc = hits.doc(i);
 
 				long resourcePrimKey = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-				NewsletterArticle newsletterArticle = null;
+				JournalArticle journalArticle = null;
 
-				newsletterArticle = newsletterArticleLocalService.getByResourcePrimKey(resourcePrimKey);
+				journalArticle = JournalArticleLocalServiceUtil.getLatestArticle(resourcePrimKey);
 
-				resourcePrimKeys.add(newsletterArticle.getResourcePrimKey());
+				journalArticlesResourcePrimKeys.add(journalArticle.getResourcePrimKey());
+
 			}
 		}
 
 		renderRequest.setAttribute("keywords", searchContext.getKeywords());
-		renderRequest.setAttribute("newsletterResults", _getNewsletterResult(resourcePrimKeys));
+		renderRequest.setAttribute("newsletterResults", _getNewsletterResult(journalArticlesResourcePrimKeys));
 	}
 
-	private List<Newsletter> _getNewsletterResult(Set<Long> resourcePrimKeys) {
+	private List<Newsletter> _getNewsletterResult(Set<Long> journalArticlesResourcePrimKeys) {
 
 		List<Newsletter> newsletters = newsLetterListingUtil.getNewsletters();
 		List<NewsletterArticle> newsletterArticles = newsLetterListingUtil.getNewsletterArticles();
 
 		List<Newsletter> newsletterResults = new ArrayList<Newsletter>();
 
-		for (Newsletter newsletter : newsletters) {
-			if (resourcePrimKeys.contains(newsletter.getResourcePrimKey())) {
+		for(Newsletter newsletter: newsletters) {
+			if(journalArticlesResourcePrimKeys.contains(newsletter.getResourcePrimKey())) {
 				newsletterResults.add(newsletter);
-			} else {
-				for (NewsletterArticle newsletterArticle : newsletterArticles) {
-					if (newsletter.getIssueNumber() == newsletterArticle.getIssueNumber()) {
-						if (resourcePrimKeys.contains(newsletterArticle.getResourcePrimKey())) {
-							if (!newsletterResults.contains(newsletter)) {
+			}else {
+				for(NewsletterArticle newsletterArticle: newsletterArticles) {
+					if(newsletter.getIssueNumber() == newsletterArticle.getIssueNumber()) {
+						if(journalArticlesResourcePrimKeys.contains(newsletterArticle.getResourcePrimKey())) {
+							if(!newsletterResults.contains(newsletter)) {
 								newsletterResults.add(newsletter);
 							}
 						}
@@ -146,10 +129,4 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	NewsLetterListingUtil newsLetterListingUtil;
-
-	@Reference
-	NewsletterLocalService newsletterLocalService;
-
-	@Reference
-	NewsletterArticleLocalService newsletterArticleLocalService;
 }
