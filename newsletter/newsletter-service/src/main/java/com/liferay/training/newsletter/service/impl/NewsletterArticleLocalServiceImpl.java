@@ -4,6 +4,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.training.newsletter.model.Newsletter;
 import com.liferay.training.newsletter.model.NewsletterArticle;
 import com.liferay.training.newsletter.service.base.NewsletterArticleLocalServiceBaseImpl;
 
@@ -18,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 public class NewsletterArticleLocalServiceImpl extends NewsletterArticleLocalServiceBaseImpl {
 
 	public NewsletterArticle addNewsletterArticle(long resourcePrimKey, int issueNumber, String title, String content,
-			long userId) throws PortalException {
+			long userId, long groupId) throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
@@ -33,13 +34,27 @@ public class NewsletterArticleLocalServiceImpl extends NewsletterArticleLocalSer
 		newsletterArticle.setContent(content);
 		newsletterArticle.setResourcePrimKey(resourcePrimKey);
 		newsletterArticle.setStatus(0);
-
+		newsletterArticle.setGroupId(groupId);
+		
 		return super.addNewsletterArticle(newsletterArticle);
 	}
 
 	public List<NewsletterArticle> getNewsletterArticles() {
 
 		return newsletterArticlePersistence.findAll();
+	}
+	
+	public NewsletterArticle getByResourcePrimKey(long resourcePrimKey) {
+		
+		List<NewsletterArticle> newsletterArticles = getNewsletterArticles();
+
+		for (NewsletterArticle newsletterArticle : newsletterArticles) {
+			if (newsletterArticle.getResourcePrimKey() == resourcePrimKey) {
+				return newsletterArticle;
+			}
+		}
+
+		return null;
 	}
 
 	public int getCountNewsletterArticlesByResourcePrimkey(long resourcePrimkey) {

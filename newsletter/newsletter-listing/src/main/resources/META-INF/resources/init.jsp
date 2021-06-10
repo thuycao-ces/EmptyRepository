@@ -1,3 +1,4 @@
+<%@page import="com.liferay.training.newsletter.utils.ReadDataWithStructureUtil"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -11,13 +12,13 @@
 <%@ taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme" %>
 <%@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
-<%@ page import="com.liferay.training.newsletter.model.*" %>
-<%@ page import="com.liferay.training.newsletter.listing.constants.*" %>
-
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Date"%>
+
+<%@ page import="com.liferay.training.newsletter.model.*" %>
+<%@ page import="com.liferay.training.newsletter.listing.constants.MVCCommandNames" %>
 
 <liferay-theme:defineObjects/>
 <portlet:defineObjects/>

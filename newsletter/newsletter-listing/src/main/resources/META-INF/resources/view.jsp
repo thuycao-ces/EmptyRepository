@@ -1,5 +1,7 @@
 <%@ include file="/init.jsp"%>
 
+<%@ include file="/newsletter/view_search.jsp"%>
+
 <liferay-ui:tabs
     names="${years}"
     refresh="false"

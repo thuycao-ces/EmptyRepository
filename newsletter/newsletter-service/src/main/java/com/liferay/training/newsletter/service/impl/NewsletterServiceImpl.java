@@ -17,10 +17,10 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class)
 public class NewsletterServiceImpl extends NewsletterServiceBaseImpl {
 
-	public Newsletter addNewsletter(long resourcePrimKey, int issueNumber, String title, String description, Date issueDate)
+	public Newsletter addNewsletter(long resourcePrimKey, int issueNumber, String title, String description, Date issueDate, long groupId)
 			throws PortalException {
 
-		return newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate);
+		return newsletterLocalService.addNewsletter(resourcePrimKey, issueNumber, title, description, issueDate, groupId);
 	}
 	
 	public void updateNewsletterStatus(long resourcePrimKey) throws PortalException {
